@@ -1,9 +1,74 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Git Projects\\Wizards\\Game\\Game.csproj": {}
+    "D:\\Git Projects\\Wizards\\Game.Desktop\\Game.Desktop.csproj": {}
   },
   "projects": {
+    "D:\\Git Projects\\Wizards\\Game.Desktop\\Game.Desktop.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Git Projects\\Wizards\\Game.Desktop\\Game.Desktop.csproj",
+        "projectName": "Game.Desktop",
+        "projectPath": "D:\\Git Projects\\Wizards\\Game.Desktop\\Game.Desktop.csproj",
+        "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
+        "outputPath": "D:\\Git Projects\\Wizards\\Game.Desktop\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\Git Projects\\Wizards\\Game\\Game.csproj": {
+                "projectPath": "D:\\Git Projects\\Wizards\\Game\\Game.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Avalonia.Desktop": {
+              "target": "Package",
+              "version": "[11.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "D:\\Git Projects\\Wizards\\Game\\Game.csproj": {
       "version": "1.0.0",
       "restore": {

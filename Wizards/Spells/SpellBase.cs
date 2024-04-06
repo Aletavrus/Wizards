@@ -1,6 +1,6 @@
 ﻿namespace Wizards.Spells;
 
-public abstract class SpellBase : IEmptySpell
+public abstract class SpellBase
 {
     public int Cost;
     public abstract void Cast();

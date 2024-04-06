@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "Z:\\Projects\\Wizards\\Wizards\\Wizards.csproj": {}
+    "D:\\Git Projects\\Wizards\\Wizards\\Wizards.csproj": {}
   },
   "projects": {
-    "Z:\\Projects\\Wizards\\Wizards\\Wizards.csproj": {
+    "D:\\Git Projects\\Wizards\\Wizards\\Wizards.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\Projects\\Wizards\\Wizards\\Wizards.csproj",
+        "projectUniqueName": "D:\\Git Projects\\Wizards\\Wizards\\Wizards.csproj",
         "projectName": "Wizards",
-        "projectPath": "Z:\\Projects\\Wizards\\Wizards\\Wizards.csproj",
-        "packagesPath": "C:\\Users\\jjj\\.nuget\\packages\\",
-        "outputPath": "Z:\\Projects\\Wizards\\Wizards\\obj\\",
+        "projectPath": "D:\\Git Projects\\Wizards\\Wizards\\Wizards.csproj",
+        "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
+        "outputPath": "D:\\Git Projects\\Wizards\\Wizards\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jjj\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -53,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
