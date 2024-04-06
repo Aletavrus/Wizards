@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Reflection.Metadata.Ecma335;
+namespace Wizards.Player;
 
 public abstract class PlayerBase
 {
 	public int health = 100;
 	protected int[] position = { 0, 0 };
-	public int moves = 3;
+	protected int moves = 4;
+	protected int stamina = 10;
 
 	public virtual void Move(int x, int y)
 	{
