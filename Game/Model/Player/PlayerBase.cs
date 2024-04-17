@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Reflection.Metadata.Ecma335;
+using Wizards.Spells;
 namespace Wizards.Player;
 
 public abstract class PlayerBase
 {
+	SpellNotTargeted spellNotTargeted;
+	SpellTargeted spellTargeted;
 	public int health = 100;
 	protected int[] position = { 0, 0 };
 	protected int moves = 4;
 	protected int stamina = 10;
+
 
 	public virtual void Move(int x, int y)
 	{

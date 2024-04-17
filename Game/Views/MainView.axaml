@@ -12,10 +12,10 @@
     <vm:MainViewModel />
   </Design.DataContext>
 	<StackPanel Margin="50" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-		<Border BorderBrush="Black"
+		<Border
         BorderThickness="2"
         CornerRadius="3">
-		    <Grid ShowGridLines="True" ColumnDefinitions="100, 100, 100, 100, 100"
+		    <Grid ShowGridLines="False" ColumnDefinitions="100, 100, 100, 100, 100"
 			      RowDefinitions="100, 100, 100, 100, 100">
 				<StackPanel Orientation="Vertical">
 					<StackPanel Orientation="Horizontal">

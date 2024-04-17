@@ -5,5 +5,6 @@ using Wizards.Spells;
 namespace Wizards.Player;
 public class PlayerClass1: PlayerBase
 {
-    SpellNotTargeted SpellNotTargeted;
+    SpellNotTargeted spellNotTargeted;
+    SpellTargeted spellTargeted;
 }
