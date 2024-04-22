@@ -19,12 +19,13 @@
 			      RowDefinitions="100, 100, 100, 100, 100">
 				<StackPanel Orientation="Vertical">
 					<StackPanel Orientation="Horizontal">
-						<Button Height="100" Width="100">
+						<Button Click="ClickHandler" Height="100" Width="100">
 						</Button>
 						<Button Height="100" Width="100">
 						</Button>
 						<Button Height="100" Width="100">
-						</Button>						<Button Height="100" Width="100">
+						</Button>						
+						<Button Height="100" Width="100">
 						</Button>
 						<Button Height="100" Width="100">
 						</Button>

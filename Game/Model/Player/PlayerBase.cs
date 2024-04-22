@@ -24,23 +24,6 @@ public abstract class PlayerBase
 	// Stamina
 	protected int stamina = 10;
 
-	/*
-	 
-	 COMMENTED BECAUSE THERE IS NO NEED IN IT - Jeany
-	 
-	public virtual void Move(int x, int y)
-	{
-		int diff1 = Math.Abs(x - position[0]);
-		int diff2 = Math.Abs(y - position[1]);
-		if (moves<diff1+diff2)
-		{
-			//should be a cycle to wait until player clicks on a possible check
-		}
-        position[0] = x;
-		position[1] = y;
-		
-	}*/
-
 	/// <summary>
 	/// Use this method to move player to another cell
 	/// </summary>
