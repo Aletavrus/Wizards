@@ -1,13 +1,24 @@
 ﻿using Avalonia.Controls;
+using ReactiveUI;
+using System;
+using System.Reactive;
 using Wizards.Player;
 
 namespace Game.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    public void MakeMove(int[] pos)
+    public ReactiveCommand<(int Row, int Column), Unit> ButtonClickCommand { get; }
+
+    public MainViewModel()
     {
-        PlayerClass1 player = new PlayerClass1(); //this would happen at the initialization of our program
-        player.Move(pos[0], pos[1]);
+        ButtonClickCommand = ReactiveCommand.Create<(int Row, int Column)>(HandleButtonClick);
+    }
+
+    private void HandleButtonClick((int Row, int Column) coordinates)
+    {
+        int row = coordinates.Row;
+        int column = coordinates.Column;
+
     }
 }

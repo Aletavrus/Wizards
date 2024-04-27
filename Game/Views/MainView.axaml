@@ -19,63 +19,63 @@
 			      RowDefinitions="100, 100, 100, 100, 100">
 				<StackPanel Orientation="Vertical">
 					<StackPanel Orientation="Horizontal">
-						<Button Click="ClickHandler" Height="100" Width="100">
+						<Button>
 						</Button>
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
-						<Button Height="100" Width="100">
-						</Button>						
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal">
-						<Button Height="100" Width="100">
-						</Button>
-						<Button Height="100" Width="100">
-						</Button>
-						<Button Height="100" Width="100">
-						</Button>
-						<Button Height="100" Width="100">
-						</Button>
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
-						<Button Height="100" Width="100">
-						</Button>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal">
-						<Button Height="100" Width="100">
-						</Button>
-						<Button Height="100" Width="100">
-						</Button>
-						<Button Height="100" Width="100">
-						</Button>
-						<Button Height="100" Width="100">
-						</Button>
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
-						<Button Height="100" Width="100">
+						<Button>
 						</Button>
-						<Button Height="100" Width="100">
+						<Button>
+						</Button>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Button>
+						</Button>
+						<Button>
+						</Button>
+						<Button>
+						</Button>
+						<Button>
+						</Button>
+						<Button>
+						</Button>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Button>
+						</Button>
+						<Button>
+						</Button>
+						<Button>
+						</Button>
+						<Button>
+						</Button>
+						<Button>
 						</Button>
 					</StackPanel>
 				</StackPanel>
