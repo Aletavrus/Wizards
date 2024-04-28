@@ -8,17 +8,9 @@ namespace Game.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    public ReactiveCommand<(int Row, int Column), Unit> ButtonClickCommand { get; }
-
-    public MainViewModel()
+    private void ButtonClick(int x, int y)
     {
-        ButtonClickCommand = ReactiveCommand.Create<(int Row, int Column)>(HandleButtonClick);
-    }
-
-    private void HandleButtonClick((int Row, int Column) coordinates)
-    {
-        int row = coordinates.Row;
-        int column = coordinates.Column;
-
+        PlayerBase player = new PlayerBase(); // for an example. when we implement the init of a player in the beginning, I will change --ALEXIS--
+        player.Move(x,y);
     }
 }
