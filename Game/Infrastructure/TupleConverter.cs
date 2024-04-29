@@ -7,14 +7,14 @@ using Avalonia.Data.Converters;
 
 namespace Game.Infrastructure
 {
-    internal class TupleConverter: IValueConverter
+    internal class TupleConverter: IMultiValueConverter
     {
         public static TupleConverter Instance { get; } = new TupleConverter();
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(IList<object?> value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return Tuple.Create(value);
+            return Tuple.Create(value[0], value[1]);
         }
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(IList<object?> value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();
         }
