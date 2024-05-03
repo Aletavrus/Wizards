@@ -1,5 +1,6 @@
-﻿namespace Wizards.Spells;
-using Wizards.Player;
+﻿using Game.Model.Player;
+
+namespace Game.Model.Spells;
 
 abstract class SpellNotTargeted : SpellBase
 {

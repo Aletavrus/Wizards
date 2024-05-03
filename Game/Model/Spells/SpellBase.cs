@@ -1,4 +1,4 @@
-﻿namespace Wizards.Spells;
+﻿namespace Game.Model.Spells;
 
 public abstract class SpellBase
 {

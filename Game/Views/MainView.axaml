@@ -2,84 +2,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:infrastructure="clr-namespace:Game.Infrastructure;assembly=Game"
+             xmlns:model="clr-namespace:Game.Model;assembly=Game"
+             xmlns:modelp="clr-namespace:Game.Model.Player;assembly=Game"
+             xmlns:models="clr-namespace:Game.Model.Spells;assembly=Game"
              xmlns:vm="clr-namespace:Game.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="700"
+             mc:Ignorable="d"
+             Width="700"
+             Height="700"
              x:Class="Game.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
-  </Design.DataContext>
-	<StackPanel Margin="50" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-		<Border
-        BorderThickness="2"
-        CornerRadius="3">
-		    <Grid ShowGridLines="False" ColumnDefinitions="100, 100, 100, 100, 100"
-			      RowDefinitions="100, 100, 100, 100, 100">
-				<StackPanel Orientation="Vertical">
-					<StackPanel Orientation="Horizontal">
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal">
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal">
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal">
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal">
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-						<Button>
-						</Button>
-					</StackPanel>
-				</StackPanel>
-		    </Grid>
-		</Border>
-	</StackPanel>
+  <UserControl.Styles>
+    <Style Selector="ItemsControl> ContentPresenter">
+      <Setter Property="Canvas.Left" Value="{Binding Location.X}"/>
+      <Setter Property="Canvas.Top" Value="{Binding Location.Y}"/>
+
+      <Setter Property="Transitions">
+        <Transitions>
+          <DoubleTransition Property="Opacity" Duration="0:0:0:0.5"/>
+        </Transitions>
+      </Setter>
+
+    </Style>
+  </UserControl.Styles>
+  <ItemsControl ItemsSource="{Binding GameObjects}"
+                Width="{Binding Width, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}"
+                Height="{Binding Height, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}">
+
+    <ItemsControl.ItemsPanel>
+      <ItemsPanelTemplate>
+        <Canvas/>
+      </ItemsPanelTemplate>
+    </ItemsControl.ItemsPanel>
+
+    <ItemsControl.DataTemplates>
+      <DataTemplate DataType="{x:Type model:MapCell}">
+        <Button Width="100"
+                Height="100"
+                Background="{Binding Color, Mode=TwoWay}"
+                Command="{Binding CellClickCommand}"
+                BorderThickness="2"
+                BorderBrush="Black"/>
+      </DataTemplate>
+
+      <DataTemplate DataType="{x:Type modelp:PlayerClass1}">
+        <Image Width="100" 
+               Height="100" 
+               Source="resm:Avalonia.Skia.Assets.NoiseAsset_256X256_PNG.png?assembly=Avalonia.Skia" />
+      </DataTemplate>
+    </ItemsControl.DataTemplates>
+  </ItemsControl>
 </UserControl>

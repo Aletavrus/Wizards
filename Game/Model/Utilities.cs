@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Avalonia;
+using System;
 
-namespace Game.Model.Other;
+namespace Game.Model;
 
 public static class Utilities
 {
@@ -16,6 +17,14 @@ public static class Utilities
     {
         int changesInX = Math.Abs(xTo - xFrom);
         int changesInY = Math.Abs(yTo - yFrom);
+
+        return changesInX + changesInY;
+    }
+
+    public static int CountMovesFromCellToCell(Point from, Point to)
+    {
+        int changesInX = Math.Abs((int)to.X - (int)from.X);
+        int changesInY = Math.Abs((int)to.Y - (int)from.Y);
 
         return changesInX + changesInY;
     }

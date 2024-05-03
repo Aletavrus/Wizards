@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Wizards.Player;
+﻿using Game.Model.Player;
 
-namespace Wizards.Spells
+namespace Game.Model.Spells;
+
+public abstract class SpellTargeted
 {
-    public abstract class SpellTargeted
-    {
-        protected PlayerBase caster;
-        protected int[] position;
+    protected PlayerBase caster;
+    protected int[] position;
 
-        public abstract void Cast(int castX, int castY);
-    }
+    public abstract void Cast(int castX, int castY);
 }

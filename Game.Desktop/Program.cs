@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Avalonia;
+using Avalonia.ReactiveUI;
 
 namespace Game.Desktop;
 
@@ -17,6 +18,7 @@ class Program
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
+            .UseReactiveUI()
             .WithInterFont()
             .LogToTrace();
 
