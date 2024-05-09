@@ -1,4 +1,6 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Controls;
+using Game.ViewModels;
+using ReactiveUI;
 
 using System.Windows.Input;
 
@@ -8,14 +10,17 @@ namespace Game.Model;
 
 internal class MapCell : GameObject
 {
-    public MapCell(Point location) : base(location)
+    private MainViewModel viewModel;
+    public MapCell(Point location, MainViewModel viewModel) : base(location)
     {
         CellClickCommand = ReactiveCommand.Create(CellClick);
+        this.viewModel = viewModel;
     }
 
     public ICommand CellClickCommand { get; }
 
     private void CellClick()
     {
+        viewModel.CellClicked(Location);
     }
 }

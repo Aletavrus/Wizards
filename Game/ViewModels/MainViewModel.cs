@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using Game.Model.Player;
 
 using Point = Avalonia.Point;
+using System.Diagnostics;
 
 namespace Game.ViewModels;
 
@@ -29,11 +30,16 @@ public partial class MainViewModel : ViewModelBase
         {
             for (int j = 0; j < 5; j++)
             {
-                GameObjects.Add(new MapCell(new Point(i * CellSize, j * CellSize)));
+                GameObjects.Add(new MapCell(new Point(i * CellSize, j * CellSize), this));
             }
         }
         Player = new PlayerClass1(new Point(2 * CellSize, CellSize));
         GameObjects.Add(Player);
+    }
+
+    public void CellClicked(Point location)
+    {
+        Player.Move(location);
     }
 
     public ObservableCollection<GameObject> GameObjects { get; set; }
