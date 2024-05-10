@@ -5,6 +5,7 @@ using Avalonia;
 using ReactiveUI;
 
 using Game.Model.Spells;
+using System.Diagnostics;
 
 namespace Game.Model.Player;
 
@@ -39,36 +40,23 @@ public abstract class PlayerBase : GameObject
     public virtual void Move(Point newLocation)
 	{
 		int cost = Utilities.CountMovesFromCellToCell(Location, newLocation);
-		if (cost > movesLeft)
-		{
-			Console.WriteLine("Sorry. I can't move that far");
-		}
-		else
-		{
+		Debug.WriteLine("it works!");
+		//if (cost > movesLeft)
+		//{
+		//	Console.WriteLine("Sorry. I can't move that far");
+		//}
+		//else
+		//{
 			//movesLeft -= cost; // Removing moves
-			//map.PutValueToCell(0, position[0], position[1]); // Changing old cell to 0
-			//(position[0], position[1]) = (x, y); // Changing coordinates in our class
-			//map.PutValueToCell(1, x ,y); // Changing new cell to 1
-		}
+			//_map.PutValueToCell(0, Convert.ToInt32(Location.X), Convert.ToInt32(Location.Y)); // Changing old cell to 0
+			Location = newLocation;
+			Debug.WriteLine(Location.X + "," + Location.Y);
+            //_map.PutValueToCell(1, Convert.ToInt32(newLocation.X) , Convert.ToInt32(newLocation.Y)); // Changing new cell to 1
+        //}
 	}
 
 	public virtual void Damage(int x)
 	{
 		health -= x;
 	}
-
-	//public int[] GetPosition()
-	//{
-	//	return position;
-	//}
-
-	//public int GetPositionX()
-	//{
-	//	return position[0];
-	//}
-
-	//public int GetPositionY()
-	//{
-	//	return position[1];
-	//}
 }

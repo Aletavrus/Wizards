@@ -21,8 +21,8 @@ public class GameMap
 
     public object[,] GameObjects { get; set; }
 
-    //public void PutValueToCell(int value, int x, int y)
-    //{
-    //    GameObjects[x, y] = value;
-    //}
+    public void PutValueToCell(int value, int x, int y)
+    {
+        GameObjects[x, y] = value;
+    }
 }
