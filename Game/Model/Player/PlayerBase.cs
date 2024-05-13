@@ -41,7 +41,7 @@ public abstract class PlayerBase : GameObject
 		int cost = (Utilities.CountMovesFromCellToCell(Location, newLocation))/100;
 		if (cost > movesLeft)
 		{
-			Debug.WriteLine("Sorry. I can't move that far");
+			Debug.WriteLine("Sorry. I can't move that far :(");
 		}
 		else
 		{
