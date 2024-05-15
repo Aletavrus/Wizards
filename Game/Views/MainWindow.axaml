@@ -12,16 +12,4 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="Game">
 	<views:MainView />
-	<!--<Window.Styles>
-		<Style Selector="Button">
-			<Setter Property="Height" Value="100"/>
-			<Setter Property="Width" Value="100"/>
-			<Setter Property="Command" Value="{Binding ButtonClick}"/>
-			--><!--<Setter Property="CommandParameter">
-				<local:MultiParameterExtension
-                    Value1="{Binding RelativeSource={RelativeSource Self}, Path=Parent.Grid.Column}"
-                    Value2="{Binding RelativeSource={RelativeSource Self}, Path=Parent.Grid.Row}" />
-			</Setter>--><!--
-		</Style>
-	</Window.Styles>-->
 </Window>

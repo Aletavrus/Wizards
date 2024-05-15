@@ -28,6 +28,7 @@ public abstract class PlayerBase : GameObject
 	
 	// Stamina
 	protected int stamina = 10;
+	
 
     public PlayerBase(Point location) : base(location)
     {

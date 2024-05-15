@@ -1,7 +1,24 @@
-﻿namespace Game.Model.Spells;
+﻿using System;
+using Avalonia;
+using ReactiveUI;
 
-public abstract class SpellBase
+namespace Game.Model.Spells;
+
+public class SpellBase : GameObject
 {
-    public int Cost;
-    public abstract void Cast();
+    private Point _location;
+
+    public SpellBase(Point location) : base(location)
+    {
+        Location = location;
+    }
+
+    public Point Location
+    {
+        get { return _location; }
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _location, value);
+        }
+    }
 }

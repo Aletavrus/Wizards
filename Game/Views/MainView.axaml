@@ -39,16 +39,37 @@
       <DataTemplate DataType="{x:Type model:MapCell}">
         <Button Width="100"
                 Height="100"
-                Background="{Binding Color, Mode=TwoWay}"
+                Background="WhiteSmoke"
                 Command="{Binding CellClickCommand}"
                 BorderThickness="2"
-                BorderBrush="Black"/>
+                BorderBrush="Black"
+                Opacity="0.1">
+          <Button.Styles>
+              <Style Selector="Button:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="Red"></Setter>
+                <Setter Property="Opacity" Value="0.5"></Setter>
+              </Style>
+          </Button.Styles>
+        </Button>
       </DataTemplate>
 
       <DataTemplate DataType="{x:Type modelp:PlayerClass1}">
         <Image Width="100" 
                Height="100" 
                Source="resm:Avalonia.Skia.Assets.NoiseAsset_256X256_PNG.png?assembly=Avalonia.Skia" />
+      </DataTemplate>
+      
+      <DataTemplate DataType="{x:Type models:SpellExample}">
+        <Button Width="80"
+                Height="80"
+                Command="{Binding ClickCommand}">
+          <Button.Styles>
+            <Style Selector="Button:pointerover /template/ ContentPresenter">
+              <Setter Property="Background" Value="Blue"></Setter>
+              <Setter Property="Opacity" Value="0.5"></Setter>
+            </Style>
+          </Button.Styles>
+        </Button>
       </DataTemplate>
     </ItemsControl.DataTemplates>
   </ItemsControl>

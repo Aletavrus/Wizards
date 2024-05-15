@@ -6,6 +6,8 @@ using Game.Model.Player;
 
 using Point = Avalonia.Point;
 using System.Diagnostics;
+using Avalonia.Input;
+using Game.Model.Spells;
 
 namespace Game.ViewModels;
 
@@ -19,28 +21,46 @@ public partial class MainViewModel : ViewModelBase
 
     public const int CellSize = 100;
 
+    public bool isCastingSpell = false;
+
     public int Height { get; set; } = 5;
-    public int Width { get; set; } = 5;
+    public int Width { get; set; } = 7;
     public PlayerBase Player { get; set; }
 
     public MainViewModel()
     {
+        
         GameObjects = [];
-        for (int i = 0; i < 5; i++)
+        Player = new PlayerClass1(new Point(3 * CellSize, 2 * CellSize));
+        GameObjects.Add(Player);
+        for (int i = 1; i < 6; i++)
         {
             for (int j = 0; j < 5; j++)
             {
                 GameObjects.Add(new MapCell(new Point(i * CellSize, j * CellSize), this));
             }
         }
-        Player = new PlayerClass1(new Point(2 * CellSize, CellSize));
-        GameObjects.Add(Player);
+        
+        GameObjects.Add(new SpellExample(new Point(10, CellSize + 10), this));
+        GameObjects.Add(new SpellExample(new Point((Width - 1) * CellSize + 10, CellSize + 10), this));
+        GameObjects.Add(new SpellExample(new Point(10, (Height - 2) * CellSize + 10), this));
+        GameObjects.Add(new SpellExample(new Point((Width - 1) * CellSize + 10, (Height - 2) * CellSize + 10), this));
     }
 
     public void CellClicked(Point location)
     {
-        Player.Move(location);
+        if (!isCastingSpell)
+        {
+            Player.Move(location);
+        }
+        else
+        {
+            Debug.WriteLine("Spell used");
+            isCastingSpell = !isCastingSpell;
+        }
     }
 
     public ObservableCollection<GameObject> GameObjects { get; set; }
+    
+    
 }
