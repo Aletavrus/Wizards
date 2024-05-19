@@ -1,4 +1,5 @@
-﻿using Game.Model;
+﻿using System;
+using Game.Model;
 
 using System.Collections.ObjectModel;
 
@@ -56,7 +57,17 @@ public partial class MainViewModel : ViewModelBase
         else
         {
             Debug.WriteLine("Spell used");
+            if (Player.Location == location)
+            {
+                Debug.WriteLine("Player got in way");
+                Random rand = new Random();
+                Debug.Write("HP went from " + Player.health + " to ");
+                Player.Damage(rand.Next(0, 10));
+                Debug.WriteLine(Player.health);
+                
+            }
             isCastingSpell = !isCastingSpell;
+            Debug.Write("Stopped casting spell");
         }
     }
 

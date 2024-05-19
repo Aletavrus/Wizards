@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "Z:\\Documents\\Projects\\Wizards\\Game\\Game.csproj": {}
+    "Z:\\Documents\\Projects\\IHR\\Game\\Game.csproj": {}
   },
   "projects": {
-    "Z:\\Documents\\Projects\\Wizards\\Game\\Game.csproj": {
+    "Z:\\Documents\\Projects\\IHR\\Game\\Game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\Documents\\Projects\\Wizards\\Game\\Game.csproj",
+        "projectUniqueName": "Z:\\Documents\\Projects\\IHR\\Game\\Game.csproj",
         "projectName": "Game",
-        "projectPath": "Z:\\Documents\\Projects\\Wizards\\Game\\Game.csproj",
+        "projectPath": "Z:\\Documents\\Projects\\IHR\\Game\\Game.csproj",
         "packagesPath": "C:\\Users\\jjj\\.nuget\\packages\\",
-        "outputPath": "Z:\\Documents\\Projects\\Wizards\\Game\\obj\\",
+        "outputPath": "Z:\\Documents\\Projects\\IHR\\Game\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jjj\\AppData\\Roaming\\NuGet\\NuGet.Config"

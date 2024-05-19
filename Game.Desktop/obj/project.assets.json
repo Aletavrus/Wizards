@@ -4652,11 +4652,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Z:\\Documents\\Projects\\Wizards\\Game.Desktop\\Game.Desktop.csproj",
+      "projectUniqueName": "Z:\\Documents\\Projects\\IHR\\Game.Desktop\\Game.Desktop.csproj",
       "projectName": "Game.Desktop",
-      "projectPath": "Z:\\Documents\\Projects\\Wizards\\Game.Desktop\\Game.Desktop.csproj",
+      "projectPath": "Z:\\Documents\\Projects\\IHR\\Game.Desktop\\Game.Desktop.csproj",
       "packagesPath": "C:\\Users\\jjj\\.nuget\\packages\\",
-      "outputPath": "Z:\\Documents\\Projects\\Wizards\\Game.Desktop\\obj\\",
+      "outputPath": "Z:\\Documents\\Projects\\IHR\\Game.Desktop\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jjj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -4671,8 +4671,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "Z:\\Documents\\Projects\\Wizards\\Game\\Game.csproj": {
-              "projectPath": "Z:\\Documents\\Projects\\Wizards\\Game\\Game.csproj"
+            "Z:\\Documents\\Projects\\IHR\\Game\\Game.csproj": {
+              "projectPath": "Z:\\Documents\\Projects\\IHR\\Game\\Game.csproj"
             }
           }
         }

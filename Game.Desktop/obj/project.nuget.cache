@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xV+EpGw3iXug4ynmwL7K1wN+uFqS2fedR0+3crD39RvW/k+6OHIJPnNaX46oe2xFossAePvREPhXH8oy60hXNA==",
+  "dgSpecHash": "oLDeG41x1RPfuoD8ou1JENteCy8hW82dAqTpY6AN4wK2vAkA4kCse+wJDjNJ6nauccLbvzkO9e+OUCWNnAFpZA==",
   "success": true,
-  "projectFilePath": "Z:\\Documents\\Projects\\Wizards\\Game.Desktop\\Game.Desktop.csproj",
+  "projectFilePath": "Z:\\Documents\\Projects\\IHR\\Game.Desktop\\Game.Desktop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jjj\\.nuget\\packages\\avalonia\\11.0.10\\avalonia.11.0.10.nupkg.sha512",
     "C:\\Users\\jjj\\.nuget\\packages\\avalonia.angle.windows.natives\\2.1.0.2023020321\\avalonia.angle.windows.natives.2.1.0.2023020321.nupkg.sha512",
