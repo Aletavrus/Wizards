@@ -20,6 +20,8 @@ public partial class MainViewModel : ViewModelBase
     //    player.Move(x,y);
     //}
 
+    public static Random rand = new Random();
+
     public const int CellSize = 100;
 
     public bool isCastingSpell = false;
@@ -60,14 +62,12 @@ public partial class MainViewModel : ViewModelBase
             if (Player.Location == location)
             {
                 Debug.WriteLine("Player got in way");
-                Random rand = new Random();
                 Debug.Write("HP went from " + Player.health + " to ");
                 Player.Damage(rand.Next(0, 10));
                 Debug.WriteLine(Player.health);
-                
             }
             isCastingSpell = !isCastingSpell;
-            Debug.Write("Stopped casting spell");
+            Debug.WriteLine("Stopped casting spell");
         }
     }
 

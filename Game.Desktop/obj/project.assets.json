@@ -4647,32 +4647,34 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jjj\\.nuget\\packages\\": {}
+    "C:\\Users\\Alex\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Z:\\Documents\\Projects\\IHR\\Game.Desktop\\Game.Desktop.csproj",
+      "projectUniqueName": "D:\\Git Projects\\Wizards\\Game.Desktop\\Game.Desktop.csproj",
       "projectName": "Game.Desktop",
-      "projectPath": "Z:\\Documents\\Projects\\IHR\\Game.Desktop\\Game.Desktop.csproj",
-      "packagesPath": "C:\\Users\\jjj\\.nuget\\packages\\",
-      "outputPath": "Z:\\Documents\\Projects\\IHR\\Game.Desktop\\obj\\",
+      "projectPath": "D:\\Git Projects\\Wizards\\Game.Desktop\\Game.Desktop.csproj",
+      "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
+      "outputPath": "D:\\Git Projects\\Wizards\\Game.Desktop\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jjj\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "Z:\\Documents\\Projects\\IHR\\Game\\Game.csproj": {
-              "projectPath": "Z:\\Documents\\Projects\\IHR\\Game\\Game.csproj"
+            "D:\\Git Projects\\Wizards\\Game\\Game.csproj": {
+              "projectPath": "D:\\Git Projects\\Wizards\\Game\\Game.csproj"
             }
           }
         }
@@ -4708,7 +4710,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

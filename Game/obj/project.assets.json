@@ -4628,24 +4628,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jjj\\.nuget\\packages\\": {}
+    "C:\\Users\\Alex\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Z:\\Documents\\Projects\\IHR\\Game\\Game.csproj",
+      "projectUniqueName": "D:\\Git Projects\\Wizards\\Game\\Game.csproj",
       "projectName": "Game",
-      "projectPath": "Z:\\Documents\\Projects\\IHR\\Game\\Game.csproj",
-      "packagesPath": "C:\\Users\\jjj\\.nuget\\packages\\",
-      "outputPath": "Z:\\Documents\\Projects\\IHR\\Game\\obj\\",
+      "projectPath": "D:\\Git Projects\\Wizards\\Game\\Game.csproj",
+      "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
+      "outputPath": "D:\\Git Projects\\Wizards\\Game\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jjj\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4709,7 +4711,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
