@@ -14,12 +14,6 @@ namespace Game.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    //private void ButtonClick(int x, int y)
-    //{
-    //    PlayerBase player = new PlayerBase(); // for an example. when we implement the init of a player in the beginning, I will change --ALEXIS--
-    //    player.Move(x,y);
-    //}
-
     public static Random rand = new Random();
 
     public const int CellSize = 100;
@@ -44,10 +38,10 @@ public partial class MainViewModel : ViewModelBase
             }
         }
         
-        GameObjects.Add(new SpellExample(new Point(10, CellSize + 10), this));
-        GameObjects.Add(new SpellExample(new Point((Width - 1) * CellSize + 10, CellSize + 10), this));
-        GameObjects.Add(new SpellExample(new Point(10, (Height - 2) * CellSize + 10), this));
-        GameObjects.Add(new SpellExample(new Point((Width - 1) * CellSize + 10, (Height - 2) * CellSize + 10), this));
+        GameObjects.Add(new SpellTargeted(new Point(10, CellSize + 10), this));
+        GameObjects.Add(new SpellTargeted(new Point((Width - 1) * CellSize + 10, CellSize + 10), this));
+        GameObjects.Add(new SpellTargeted(new Point(10, (Height - 2) * CellSize + 10), this));
+        GameObjects.Add(new SpellTargeted(new Point((Width - 1) * CellSize + 10, (Height - 2) * CellSize + 10), this));
     }
 
     public void CellClicked(Point location)

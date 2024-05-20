@@ -1,11 +1,25 @@
-﻿using Game.Model.Player;
+﻿using System.Diagnostics;
+using System.Windows.Input;
+using Avalonia;
+using Game.ViewModels;
+using ReactiveUI;
 
 namespace Game.Model.Spells;
 
-public abstract class SpellTargeted
+internal class SpellTargeted : SpellBase
 {
-    protected PlayerBase caster;
-    protected int[] position;
+    private MainViewModel viewModel;
+    public SpellTargeted(Point location, MainViewModel viewModel) : base(location)
+    {
+        ClickCommand = ReactiveCommand.Create(Clicked);
+        this.viewModel = viewModel;
+    }
 
-    public abstract void Cast(int castX, int castY);
+    public ICommand ClickCommand { get; }
+
+    private void Clicked()
+    {
+        Debug.WriteLine("Spell clicked");
+        viewModel.isCastingSpell = !viewModel.isCastingSpell;
+    }
 }

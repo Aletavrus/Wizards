@@ -59,7 +59,7 @@
                Source="resm:Avalonia.Skia.Assets.NoiseAsset_256X256_PNG.png?assembly=Avalonia.Skia" />
       </DataTemplate>
       
-      <DataTemplate DataType="{x:Type models:SpellExample}">
+      <DataTemplate DataType="{x:Type models:SpellTargeted}">
         <Button Width="80"
                 Height="80"
                 Command="{Binding ClickCommand}">
