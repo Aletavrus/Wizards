@@ -13,8 +13,8 @@ namespace Game.Model.Player;
 public abstract class PlayerBase : GameObject
 {
 	// Spells
-	private SpellNotTargeted spellNotTargeted;
-	private SpellTargeted spellTargeted;
+	public SpellTargeted spellTargeted;
+	public SpellAOE spellAOE;
 
 	// Map
 	private GameMap _map;
@@ -30,8 +30,10 @@ public abstract class PlayerBase : GameObject
 	protected int stamina = 10;
 	
 
-    public PlayerBase(Point location) : base(location)
+    public PlayerBase(Point location, SpellTargeted spellTargeted, SpellAOE spellAOE) : base(location)
     {
+	    this.spellTargeted = spellTargeted;
+	    this.spellAOE = spellAOE;
     }
 
     /// <summary>
@@ -57,6 +59,8 @@ public abstract class PlayerBase : GameObject
 
 	public virtual void Damage(int x)
 	{
+		Debug.Write("[Player] HP went from " + health + " to ");
 		health -= x;
+		Debug.WriteLine(health);
 	}
 }

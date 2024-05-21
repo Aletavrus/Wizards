@@ -8,6 +8,7 @@ using Game.Model.Player;
 using Point = Avalonia.Point;
 using System.Diagnostics;
 using Avalonia.Input;
+using DynamicData;
 using Game.Model.Spells;
 
 namespace Game.ViewModels;
@@ -23,6 +24,7 @@ public partial class MainViewModel : ViewModelBase
     public const int CellSize = 100;
 
     public bool isCastingSpell = false;
+    public int typeOfSpell = 0; // 0 - no spell; 1 - SpellTargeted; 2 - SpellAOE
 
     public int Height { get; set; } = 5;
     public int Width { get; set; } = 7;
@@ -32,7 +34,10 @@ public partial class MainViewModel : ViewModelBase
     {
         
         GameObjects = [];
-        Player = new PlayerClass1(new Point(3 * CellSize, 2 * CellSize));
+        Player = new PlayerClass1(
+            new Point(3 * CellSize, 2 * CellSize),
+            new SpellTargeted(new Point(10, CellSize + 10), this),
+            new SpellAOE(new Point((Width - 1) * CellSize + 10, CellSize + 10), this));
         GameObjects.Add(Player);
         for (int i = 1; i < 6; i++)
         {
@@ -42,10 +47,11 @@ public partial class MainViewModel : ViewModelBase
             }
         }
         
-        GameObjects.Add(new SpellExample(new Point(10, CellSize + 10), this));
-        GameObjects.Add(new SpellExample(new Point((Width - 1) * CellSize + 10, CellSize + 10), this));
-        GameObjects.Add(new SpellExample(new Point(10, (Height - 2) * CellSize + 10), this));
-        GameObjects.Add(new SpellExample(new Point((Width - 1) * CellSize + 10, (Height - 2) * CellSize + 10), this));
+        GameObjects.Add(Player.spellTargeted);
+        GameObjects.Add(Player.spellAOE);
+        
+        /*GameObjects.Add(new SpellExample(new Point(10, (Height - 2) * CellSize + 10), this));
+        GameObjects.Add(new SpellExample(new Point((Width - 1) * CellSize + 10, (Height - 2) * CellSize + 10), this));*/
     }
 
     public void CellClicked(Point location)
@@ -56,18 +62,19 @@ public partial class MainViewModel : ViewModelBase
         }
         else
         {
-            Debug.WriteLine("Spell used");
-            if (Player.Location == location)
+            
+            switch (typeOfSpell)
             {
-                Debug.WriteLine("Player got in way");
-                Random rand = new Random();
-                Debug.Write("HP went from " + Player.health + " to ");
-                Player.Damage(rand.Next(0, 10));
-                Debug.WriteLine(Player.health);
-                
+                case 1:
+                    Player.spellTargeted.Execute(location);
+                    break;
+                case 2:
+                    Player.spellAOE.Execute(location);
+                    break;
+                default:
+                    Debug.WriteLine("[ERROR] INVALID TYPE OF SPELL");
+                    break;
             }
-            isCastingSpell = !isCastingSpell;
-            Debug.Write("Stopped casting spell");
         }
     }
 

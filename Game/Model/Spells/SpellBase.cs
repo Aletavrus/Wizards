@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Avalonia;
 using ReactiveUI;
 
@@ -20,5 +21,15 @@ public class SpellBase : GameObject
         {
             this.RaiseAndSetIfChanged(ref _location, value);
         }
+    }
+
+    public void Execute(Point location)
+    {
+        
+    }
+    
+    public void Log(String message)
+    {
+        Debug.WriteLine(String.Format("[{0}] {1}", this.GetType().Name, message));
     }
 }
