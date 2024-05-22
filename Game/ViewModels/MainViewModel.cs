@@ -10,6 +10,10 @@ using System.Diagnostics;
 using Avalonia.Input;
 using DynamicData;
 using Game.Model.Spells;
+using Game.Views;
+using Avalonia.Controls;
+using ReactiveUI;
+using Tmds.DBus.Protocol;
 
 namespace Game.ViewModels;
 
@@ -29,10 +33,10 @@ public partial class MainViewModel : ViewModelBase
     public int Height { get; set; } = 5;
     public int Width { get; set; } = 7;
     public PlayerBase Player { get; set; }
+    public Fireball Fireball { get; set; }
 
     public MainViewModel()
     {
-        
         GameObjects = [];
         Player = new PlayerClass1(
             new Point(3 * CellSize, 2 * CellSize),
@@ -49,7 +53,8 @@ public partial class MainViewModel : ViewModelBase
         
         GameObjects.Add(Player.spellTargeted);
         GameObjects.Add(Player.spellAOE);
-        
+        Fireball = new Fireball(new Point(0, 0));
+        GameObjects.Add(Fireball);
         /*GameObjects.Add(new SpellExample(new Point(10, (Height - 2) * CellSize + 10), this));
         GameObjects.Add(new SpellExample(new Point((Width - 1) * CellSize + 10, (Height - 2) * CellSize + 10), this));*/
     }
@@ -66,7 +71,7 @@ public partial class MainViewModel : ViewModelBase
             switch (typeOfSpell)
             {
                 case 1:
-                    Player.spellTargeted.Execute(location);
+                    Player.spellTargeted.Execute(location); 
                     break;
                 case 2:
                     Player.spellAOE.Execute(location);

@@ -37,20 +37,20 @@
 
     <ItemsControl.DataTemplates>
       <DataTemplate DataType="{x:Type model:MapCell}">
-        <Button Width="100"
-                Height="100"
-                Background="WhiteSmoke"
-                Command="{Binding CellClickCommand}"
-                BorderThickness="2"
-                BorderBrush="Black"
-                Opacity="0.1">
-          <Button.Styles>
-              <Style Selector="Button:pointerover /template/ ContentPresenter">
-                <Setter Property="Background" Value="Red"></Setter>
-                <Setter Property="Opacity" Value="0.5"></Setter>
-              </Style>
-          </Button.Styles>
-        </Button>
+		  <Button Width="100"
+				  Height="100"
+				  Background="WhiteSmoke"
+				  Command="{Binding CellClickCommand}"
+				  BorderThickness="2"
+				  BorderBrush="Black"
+				  Opacity="0.1">
+			  <Button.Styles>
+				  <Style Selector="Button:pointerover /template/ ContentPresenter">
+					  <Setter Property="Background" Value="Red"></Setter>
+					  <Setter Property="Opacity" Value="0.5"></Setter>
+				  </Style>
+			  </Button.Styles>
+		  </Button>
       </DataTemplate>
 
       <DataTemplate DataType="{x:Type modelp:PlayerClass1}">
@@ -71,6 +71,9 @@
           </Button.Styles>
         </Button>
       </DataTemplate>
+		<DataTemplate DataType="{x:Type model:Fireball}">
+			<Rectangle Height="100" Width="100" Fill="Firebrick" Opacity="{Binding FireOpacity}"/>
+		</DataTemplate> 
     </ItemsControl.DataTemplates>
   </ItemsControl>
 </UserControl>

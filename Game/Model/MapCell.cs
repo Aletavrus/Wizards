@@ -24,4 +24,18 @@ internal class MapCell : GameObject
     {
         viewModel.CellClicked(Location);
     }
+
+
+    private double buttonOpacity = 0.1;
+    public double ButtonOpacity
+    {
+        get
+        {
+            return buttonOpacity;
+        }
+        set
+        {
+            this.RaiseAndSetIfChanged(ref buttonOpacity, value);
+        }
+    }
 }
