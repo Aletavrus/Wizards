@@ -33,11 +33,10 @@ public class SpellTargeted : SpellBase
 
     public void Execute(Point location)
     {
-        viewModel.Fireball.FireOpacity = 0.7;
         Log("Clicked on cell. Executing spell");
         SetTimer(viewModel, location);
         Log("Timer Created");
-        while(location!=viewModel.Fireball.Location)
+        while (location != viewModel.Fireball.Location)
         {
             continue;
         }
@@ -54,31 +53,33 @@ public class SpellTargeted : SpellBase
         viewModel.isCastingSpell = !viewModel.isCastingSpell;
         viewModel.typeOfSpell = 0;
         Log("Stopped casting spell");
+        //viewModel.Fireball.Location = new Point(0, 0);
     }
 
     private static void SetTimer(MainViewModel viewModel, Point location)
     {
-        aTimer = new System.Timers.Timer(1000);
-        aTimer.Elapsed += (sender, e) => OnTimedEvent(sender, e, viewModel, location);
+        double length = Math.Sqrt(Math.Pow(location.X, 2) + Math.Pow(location.Y, 2));
+        double xDiff = location.X / 200;
+        double yDiff = location.Y / 200;
+        Debug.WriteLine($"xDiff[{xDiff}], yDiff[{yDiff}]");
+        aTimer = new Timer(1);
+        aTimer.Elapsed += (sender, e) => OnTimedEvent(sender, e, viewModel, location, xDiff, yDiff);
         aTimer.AutoReset = true;
         aTimer.Enabled = true;
     }
 
-    private static void OnTimedEvent(object? sender, ElapsedEventArgs e, MainViewModel viewModel, Point cellLocation)
+    private static void OnTimedEvent(object? sender, ElapsedEventArgs e, MainViewModel viewModel, Point cellLocation, double xDiff, double yDiff)
     {
         Point fireLocation = viewModel.Fireball.Location;
-        if (fireLocation.X!=cellLocation.X)
+        if (fireLocation!=cellLocation)
         {
-            viewModel.Fireball.Location = new Point(fireLocation.X+100, fireLocation.Y);
-        }
-        else if (fireLocation.Y!=cellLocation.Y)
-        {
-            viewModel.Fireball.Location = new Point(fireLocation.X, fireLocation.Y + 100);
+            viewModel.Fireball.Location = new Point(fireLocation.X+xDiff, fireLocation.Y+yDiff);
         }
         else
         {
-            aTimer.AutoReset = false;
+            aTimer.Stop();
             aTimer.Enabled = false;
+            aTimer.AutoReset = false;
         }
         Debug.WriteLine($"Fireball Location: {viewModel.Fireball.Location.X}, {viewModel.Fireball.Location.Y}");
     }

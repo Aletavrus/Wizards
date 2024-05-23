@@ -12,7 +12,7 @@ public class Fireball : GameObject
 	{
 	}
 
-    private double fireOpacity = 0.0;
+    private double fireOpacity = 1.0;
     public double FireOpacity
     {
         get
@@ -22,6 +22,7 @@ public class Fireball : GameObject
         set
         {
             this.RaiseAndSetIfChanged(ref fireOpacity, value);
+            Debug.WriteLine("Opacity changed");
         }
     }
 }

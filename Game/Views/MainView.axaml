@@ -36,7 +36,12 @@
     </ItemsControl.ItemsPanel>
 
     <ItemsControl.DataTemplates>
-      <DataTemplate DataType="{x:Type model:MapCell}">
+		<DataTemplate DataType="{x:Type model:Fireball}">
+			<Rectangle Height="100" Width="100" Fill="Firebrick" Opacity="{Binding FireOpacity}">
+			</Rectangle>
+		</DataTemplate>
+		
+		<DataTemplate DataType="{x:Type model:MapCell}">
 		  <Button Width="100"
 				  Height="100"
 				  Background="WhiteSmoke"
@@ -71,9 +76,6 @@
           </Button.Styles>
         </Button>
       </DataTemplate>
-		<DataTemplate DataType="{x:Type model:Fireball}">
-			<Rectangle Height="100" Width="100" Fill="Firebrick" Opacity="{Binding FireOpacity}"/>
-		</DataTemplate> 
     </ItemsControl.DataTemplates>
   </ItemsControl>
 </UserControl>

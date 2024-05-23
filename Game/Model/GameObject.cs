@@ -1,5 +1,4 @@
 ﻿using ReactiveUI;
-
 using Point = Avalonia.Point;
 
 namespace Game.Model;

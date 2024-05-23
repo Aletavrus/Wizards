@@ -67,7 +67,7 @@ public partial class MainViewModel : ViewModelBase
         }
         else
         {
-            
+            Fireball.FireOpacity = 0.5;
             switch (typeOfSpell)
             {
                 case 1:
@@ -80,6 +80,8 @@ public partial class MainViewModel : ViewModelBase
                     Debug.WriteLine("[ERROR] INVALID TYPE OF SPELL");
                     break;
             }
+            Debug.WriteLine("End of Spells");
+            Fireball.Location = new Point(0, 0);
         }
     }
 
