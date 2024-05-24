@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using System.Diagnostics;
 using Point = Avalonia.Point;
 
 namespace Game.Model;
@@ -19,5 +20,10 @@ public class GameObject : ReactiveObject
         {
             this.RaiseAndSetIfChanged(ref _location, value);
         }
+    }
+
+    public void Log(string message)
+    {
+        Debug.WriteLine(string.Format("[{0}] {1}", this.GetType().Name, message));
     }
 }

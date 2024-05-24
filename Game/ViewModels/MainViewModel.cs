@@ -14,6 +14,9 @@ using Game.Views;
 using Avalonia.Controls;
 using ReactiveUI;
 using Tmds.DBus.Protocol;
+using Avalonia.Threading;
+using Avalonia.Collections;
+using Microsoft.CodeAnalysis;
 
 namespace Game.ViewModels;
 
@@ -27,13 +30,11 @@ public partial class MainViewModel : ViewModelBase
 
     public const int CellSize = 100;
 
-    public bool isCastingSpell = false;
-    public int typeOfSpell = 0; // 0 - no spell; 1 - SpellTargeted; 2 - SpellAOE
-
     public int Height { get; set; } = 5;
     public int Width { get; set; } = 7;
     public PlayerBase Player { get; set; }
     public Fireball Fireball { get; set; }
+    public GameControl GameControl { get; set; }
 
     public MainViewModel()
     {
@@ -54,35 +55,51 @@ public partial class MainViewModel : ViewModelBase
         GameObjects.Add(Player.spellTargeted);
         GameObjects.Add(Player.spellAOE);
         Fireball = new Fireball(new Point(0, 0));
+        Fireball.Active = false;
         GameObjects.Add(Fireball);
-        /*GameObjects.Add(new SpellExample(new Point(10, (Height - 2) * CellSize + 10), this));
-        GameObjects.Add(new SpellExample(new Point((Width - 1) * CellSize + 10, (Height - 2) * CellSize + 10), this));*/
+
+        GameControl = new(Player, Fireball);
+        GameControl.TargetLocation = new Point(0, 0);
+
+        DispatcherTimer timer = new DispatcherTimer();
+        timer.Interval = new TimeSpan(0, 0, 0, 1000 / 60);
+        timer.Tick += delegate
+        {
+            OnTimedEvent();
+        };
+        timer.IsEnabled = true;
+        timer.Start();  
+
+    }
+
+/*        
+PSEUDOCODE
+Player logic (spell, move etc.)
+Other objects
+Move objects
+Other actions
+ */
+
+    private void OnTimedEvent()
+    {
+        Debug.WriteLine("timer works");
+        if (GameControl.TargetLocation!=Fireball.Location && Fireball.Active==true)
+        {
+            Debug.WriteLine("entered");
+            Fireball.Location = new Point(Fireball.Location.X + GameControl.xDiff, Fireball.Location.Y + GameControl.yDiff);
+        }
+        if (GameControl.TargetLocation==Fireball.Location)
+        {
+            Fireball.Active = false;
+            GameControl.TargetLocation = new Point(0, 0);
+            Fireball.Location = new Point(0, 0);
+        }
     }
 
     public void CellClicked(Point location)
     {
-        if (!isCastingSpell)
-        {
-            Player.Move(location);
-        }
-        else
-        {
-            Fireball.FireOpacity = 0.5;
-            switch (typeOfSpell)
-            {
-                case 1:
-                    Player.spellTargeted.Execute(location); 
-                    break;
-                case 2:
-                    Player.spellAOE.Execute(location);
-                    break;
-                default:
-                    Debug.WriteLine("[ERROR] INVALID TYPE OF SPELL");
-                    break;
-            }
-            Debug.WriteLine("End of Spells");
-            Fireball.Location = new Point(0, 0);
-        }
+        Debug.WriteLine("Entered MapCell condition");
+        Player.DoAction(location);
     }
 
     public ObservableCollection<GameObject> GameObjects { get; set; }

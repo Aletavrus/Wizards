@@ -19,21 +19,50 @@ public abstract class PlayerBase : GameObject
 	// Map
 	private GameMap _map;
 
-	// Health and postion
+	// Health and position
 	public int health = 100;
 
 	// How many moves left and how many stamina one move costs
 	protected int movesLeft = 4;
 	protected int moveCost = 1;
-	
+
+    protected int currentAction = 0; // 0 - move; 1 - SpellTargeted; 2 - SpellAOE
+	public int CurrentAction
+	{
+		get => currentAction;
+		set => currentAction = value;
+	}
+
 	// Stamina
 	protected int stamina = 10;
 	
-
     public PlayerBase(Point location, SpellTargeted spellTargeted, SpellAOE spellAOE) : base(location)
     {
 	    this.spellTargeted = spellTargeted;
 	    this.spellAOE = spellAOE;
+    }
+
+	public void DoAction(Point location)
+	{
+		Log(currentAction.ToString());
+        switch (currentAction)
+        {
+            case 0:
+                Move(location);
+                break;
+            case 1:
+				Log("Case 1 entered");
+                spellTargeted.Execute(location);
+                break;
+            case 2:
+                spellAOE.Execute(location);
+                break;
+            default:
+                Log("[ERROR] INVALID TYPE OF SPELL");
+                break;
+        }
+		Log("End of Action");
+		currentAction = 0;
     }
 
     /// <summary>

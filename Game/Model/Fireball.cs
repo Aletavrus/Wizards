@@ -8,6 +8,7 @@ namespace Game.Model;
 
 public class Fireball : GameObject
 {
+    public bool Active { get; set; }
 	public Fireball(Point location):base(location)
 	{
 	}

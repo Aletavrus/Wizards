@@ -10,6 +10,8 @@ namespace Game.Model.Spells;
 
 public class SpellAOE : SpellBase
 {
+    private static Random rand = new Random();
+
     private MainViewModel viewModel;
 
     private int aoeRange = 3;
@@ -25,12 +27,11 @@ public class SpellAOE : SpellBase
     private void Clicked()
     {
         Log("Spell icon clicked. Waiting for a cell click");
-        viewModel.isCastingSpell = !viewModel.isCastingSpell;
-        viewModel.typeOfSpell = 2;
     }
     
     public void Execute(Point location)
     {
+        viewModel.GameControl.TargetLocation = location;
         Log("Clicked on cell. Executing spell");
         if (Utilities.CountMovesFromCellToCell(location, viewModel.Player.Location) / MainViewModel.CellSize > aoeRange)
         {
@@ -39,12 +40,8 @@ public class SpellAOE : SpellBase
         else
         {
             Log("Player got in AOE. Damaging player");
-            Random rand = new Random();
             viewModel.Player.Damage(rand.Next(0, 10));
         }
-        
-        viewModel.isCastingSpell = !viewModel.isCastingSpell;
-        viewModel.typeOfSpell = 0;
         Log("Stopped casting spell");
     }
 }

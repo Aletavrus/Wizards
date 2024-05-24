@@ -27,9 +27,4 @@ public class SpellBase : GameObject
     {
         
     }
-    
-    public void Log(String message)
-    {
-        Debug.WriteLine(String.Format("[{0}] {1}", this.GetType().Name, message));
-    }
 }
