@@ -26,12 +26,15 @@ public class SpellAOE : SpellBase
 
     private void Clicked()
     {
+        viewModel.Player.CurrentAction = 2;
         Log("Spell icon clicked. Waiting for a cell click");
     }
     
     public void Execute(Point location)
     {
         viewModel.GameControl.TargetLocation = location;
+        viewModel.Fireball.Active = true;
+        viewModel.Fireball.OnArea = true;
         Log("Clicked on cell. Executing spell");
         if (Utilities.CountMovesFromCellToCell(location, viewModel.Player.Location) / MainViewModel.CellSize > aoeRange)
         {

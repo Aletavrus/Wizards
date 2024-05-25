@@ -37,7 +37,7 @@
 
     <ItemsControl.DataTemplates>
 		<DataTemplate DataType="{x:Type model:Fireball}">
-			<Rectangle Height="100" Width="100" Fill="Firebrick" Opacity="{Binding FireOpacity}">
+			<Rectangle Height="{Binding FireHeight, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}" Width="{Binding FireWidth, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}" Fill="Firebrick" Opacity="{Binding FireOpacity}">
 			</Rectangle>
 		</DataTemplate>
 		

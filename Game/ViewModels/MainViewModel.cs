@@ -56,7 +56,6 @@ public partial class MainViewModel : ViewModelBase
         GameObjects.Add(Player.spellTargeted);
         GameObjects.Add(Player.spellAOE);
         Fireball = new Fireball(new Point(0, 0));
-        Fireball.Active = false;
         GameObjects.Add(Fireball);
 
         GameControl = new(Player, Fireball);
@@ -84,7 +83,7 @@ Other actions
     {
         if (!Fireball.Active)
         {
-            Fireball.FireOpacity = 0.0;
+            Fireball.FireOpacity = 0.2;
         }
         else if (Fireball.Active)
         {
@@ -94,8 +93,17 @@ Other actions
         {
             Fireball.Location = new Point(Fireball.Location.X + GameControl.xDiff, Fireball.Location.Y + GameControl.yDiff);
         }
-        else if (GameControl.TargetLocation==Fireball.Location)
+        else if (GameControl.TargetLocation==Fireball.Location && Fireball.Location!=new Point(0,0))
         {
+            if (Fireball.OnArea)
+            {
+                Fireball.Location = new Point(Fireball.Location.X-100, Fireball.Location.Y-100);
+                Fireball.FireHeight = 3;
+                Fireball.FireWidth = 3;
+                Fireball.OnArea = false;
+            }
+            Fireball.FireHeight = 1;
+            Fireball.FireWidth = 1;
             Fireball.Active = false;
             GameControl.TargetLocation = new Point(0, 0);
             Fireball.Location = new Point(0, 0);

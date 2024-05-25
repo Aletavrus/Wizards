@@ -19,8 +19,8 @@ public class GameControl
 		set
 		{
 			targetLocation = value;
-			xDiff = targetLocation.X / (1000/60);
-			yDiff = targetLocation.Y / (1000 / 60);
+			xDiff = targetLocation.X / 100;
+			yDiff = targetLocation.Y / 100;
 		}
 	}
     public GameControl(PlayerBase player, Fireball fireball)

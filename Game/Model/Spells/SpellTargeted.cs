@@ -43,6 +43,5 @@ public class SpellTargeted : SpellBase
             viewModel.Player.Damage(rand.Next(0, 10));
         }
         Log("Stopped casting spell");
-        //viewModel.Fireball.Location = new Point(0, 0);
     }
 }

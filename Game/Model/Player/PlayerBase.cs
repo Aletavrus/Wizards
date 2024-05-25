@@ -44,7 +44,6 @@ public abstract class PlayerBase : GameObject
 
 	public void DoAction(Point location)
 	{
-		Log(currentAction.ToString());
         switch (currentAction)
         {
             case 0:
