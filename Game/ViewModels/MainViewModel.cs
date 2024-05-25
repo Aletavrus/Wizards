@@ -18,17 +18,12 @@ using Avalonia.Threading;
 using Avalonia.Collections;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Threading;
 
 namespace Game.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    //private void ButtonClick(int x, int y)
-    //{
-    //    PlayerBase player = new PlayerBase(); // for an example. when we implement the init of a player in the beginning, I will change --ALEXIS--
-    //    player.Move(x,y);
-    //}
-
     public const int CellSize = 100;
 
     public int Height { get; set; } = 5;
@@ -36,6 +31,8 @@ public partial class MainViewModel : ViewModelBase
     public PlayerBase Player { get; set; }
     public Fireball Fireball { get; set; }
     public GameControl GameControl { get; set; }
+    public DispatcherTimer Timer {  get; set; }
+    private int counterToRender = 0;
 
     public MainViewModel()
     {
@@ -81,33 +78,54 @@ Other actions
 
     private void OnTimedEvent()
     {
-        if (!Fireball.Active)
+        if (counterToRender < 10)
         {
-            Fireball.FireOpacity = 0.2;
-        }
-        else if (Fireball.Active)
-        {
-            Fireball.FireOpacity = 0.7;
-        }
-        if (GameControl.TargetLocation!=Fireball.Location && Fireball.Active)
-        {
-            Fireball.Location = new Point(Fireball.Location.X + GameControl.xDiff, Fireball.Location.Y + GameControl.yDiff);
-        }
-        else if (GameControl.TargetLocation==Fireball.Location && Fireball.Location!=new Point(0,0))
-        {
-            if (Fireball.OnArea)
+            if (counterToRender > 0)
             {
-                Fireball.Location = new Point(Fireball.Location.X-100, Fireball.Location.Y-100);
-                Fireball.FireHeight = 3;
-                Fireball.FireWidth = 3;
-                Fireball.OnArea = false;
+                counterToRender++;
             }
-            Fireball.FireHeight = 1;
-            Fireball.FireWidth = 1;
-            Fireball.Active = false;
+            else
+            {
+                if (!Fireball.Active)
+                {
+                    Fireball.FireOpacity = 0.0;
+                }
+                else if (Fireball.Active)
+                {
+                    Fireball.FireOpacity = 0.7;
+                }
+                if (GameControl.TargetLocation != Fireball.Location && Fireball.Active)
+                {
+                    Fireball.Location = new Point(Fireball.Location.X + GameControl.xDiff, Fireball.Location.Y + GameControl.yDiff);
+                }
+                else if (GameControl.TargetLocation == Fireball.Location && Fireball.Location != new Point(0, 0))
+                {
+                    if (Fireball.OnArea)
+                    {
+                        Fireball.Location = new Point(Fireball.Location.X - 100, Fireball.Location.Y - 100);
+                        Fireball.FireHeight = 3;
+                        Fireball.FireWidth = 3;
+                        Fireball.OnArea = false;
+                        Fireball.Active = false;
+                        counterToRender++;
+                    }
+                    else
+                    {
+                        Fireball.Active = false;
+                        counterToRender++;
+                    }
+                }
+            }
+        }
+        else
+        {
+            counterToRender = 0;
             GameControl.TargetLocation = new Point(0, 0);
             Fireball.Location = new Point(0, 0);
+            Fireball.FireHeight = 1;
+            Fireball.FireWidth = 1;
         }
+
     }
 
     public void CellClicked(Point location)
@@ -115,7 +133,5 @@ Other actions
         Player.DoAction(location);
     }
 
-    public ObservableCollection<GameObject> GameObjects { get; set; }
-    
-    
+    public ObservableCollection<GameObject> GameObjects { get; set; }    
 }

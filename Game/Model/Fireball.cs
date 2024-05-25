@@ -16,7 +16,7 @@ public class Fireball : GameObject
         OnArea = false;
 	}
 
-    private double fireOpacity = 0.2;
+    private double fireOpacity = 0.0;
     public double FireOpacity
     {
         get
