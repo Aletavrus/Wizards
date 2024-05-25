@@ -17,6 +17,7 @@ using Tmds.DBus.Protocol;
 using Avalonia.Threading;
 using Avalonia.Collections;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Game.ViewModels;
 
@@ -61,15 +62,14 @@ public partial class MainViewModel : ViewModelBase
         GameControl = new(Player, Fireball);
         GameControl.TargetLocation = new Point(0, 0);
 
-        DispatcherTimer timer = new DispatcherTimer();
-        timer.Interval = new TimeSpan(0, 0, 0, 1000 / 60);
-        timer.Tick += delegate
+        DispatcherTimer Timer = new DispatcherTimer();
+        Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000/60);
+        Timer.Tick += delegate
         {
             OnTimedEvent();
         };
-        timer.IsEnabled = true;
-        timer.Start();  
-
+        Timer.IsEnabled = true;
+        Timer.Start();
     }
 
 /*        
@@ -82,13 +82,19 @@ Other actions
 
     private void OnTimedEvent()
     {
-        Debug.WriteLine("timer works");
-        if (GameControl.TargetLocation!=Fireball.Location && Fireball.Active==true)
+        if (!Fireball.Active)
         {
-            Debug.WriteLine("entered");
+            Fireball.FireOpacity = 0.0;
+        }
+        else if (Fireball.Active)
+        {
+            Fireball.FireOpacity = 0.7;
+        }
+        if (GameControl.TargetLocation!=Fireball.Location && Fireball.Active)
+        {
             Fireball.Location = new Point(Fireball.Location.X + GameControl.xDiff, Fireball.Location.Y + GameControl.yDiff);
         }
-        if (GameControl.TargetLocation==Fireball.Location)
+        else if (GameControl.TargetLocation==Fireball.Location)
         {
             Fireball.Active = false;
             GameControl.TargetLocation = new Point(0, 0);
@@ -98,7 +104,6 @@ Other actions
 
     public void CellClicked(Point location)
     {
-        Debug.WriteLine("Entered MapCell condition");
         Player.DoAction(location);
     }
 

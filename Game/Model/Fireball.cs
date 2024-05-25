@@ -13,7 +13,7 @@ public class Fireball : GameObject
 	{
 	}
 
-    private double fireOpacity = 1.0;
+    private double fireOpacity = 0.0;
     public double FireOpacity
     {
         get

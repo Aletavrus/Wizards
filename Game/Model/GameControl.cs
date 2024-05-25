@@ -21,8 +21,6 @@ public class GameControl
 			targetLocation = value;
 			xDiff = targetLocation.X / (1000/60);
 			yDiff = targetLocation.Y / (1000 / 60);
-			Debug.WriteLine(targetLocation);
-			Debug.WriteLine(string.Format("xDiff[{0}] yDiff[{1}]", xDiff, yDiff));
 		}
 	}
     public GameControl(PlayerBase player, Fireball fireball)

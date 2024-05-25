@@ -32,10 +32,6 @@ public class SpellTargeted : SpellBase
     {
         viewModel.GameControl.TargetLocation = location;
         viewModel.Fireball.Active = true;
-        while (location!=viewModel.Fireball.Location)
-        {
-            continue;
-        }
         Log("Clicked on cell. Executing spell");
         if (viewModel.Player.Location != location)
         {

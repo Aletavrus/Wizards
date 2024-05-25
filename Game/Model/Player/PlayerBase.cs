@@ -51,7 +51,6 @@ public abstract class PlayerBase : GameObject
                 Move(location);
                 break;
             case 1:
-				Log("Case 1 entered");
                 spellTargeted.Execute(location);
                 break;
             case 2:
@@ -61,7 +60,6 @@ public abstract class PlayerBase : GameObject
                 Log("[ERROR] INVALID TYPE OF SPELL");
                 break;
         }
-		Log("End of Action");
 		currentAction = 0;
     }
 
