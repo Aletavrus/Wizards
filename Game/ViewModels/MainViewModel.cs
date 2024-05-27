@@ -98,7 +98,7 @@ Other actions
             }
             else if (Fireball.Active)
             {
-                Fireball.FireOpacity = 0.7;
+                Fireball.FireOpacity = 1.0;
             }
             if (GameControl.TargetLocation != Fireball.Location && Fireball.Active)
             {
@@ -118,7 +118,6 @@ Other actions
             }
         }
     }
-
     public void CellClicked(Point location)
     {
         Player.DoAction(location);

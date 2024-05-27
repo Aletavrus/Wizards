@@ -37,8 +37,12 @@
 
     <ItemsControl.DataTemplates>
 		<DataTemplate DataType="{x:Type model:Fireball}">
-			<Rectangle Height="{Binding FireHeight, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}" Width="{Binding FireWidth, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}" Fill="Firebrick" Opacity="{Binding FireOpacity}">
-			</Rectangle>
+			<Image 
+				Height="{Binding FireHeight, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}"
+				Width="{Binding FireWidth, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}" 
+			    Source="avares://Game/Assets/Fireball.png" 
+				Opacity="{Binding FireOpacity}">
+			</Image>
 		</DataTemplate>
 		
 		<DataTemplate DataType="{x:Type model:MapCell}">

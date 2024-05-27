@@ -5,11 +5,11 @@ public class GameMap
     public const int CellSize = 100;
 
     public int Height { get; set; } = 5;
-    public int Width { get; set; } = 5;
+    public int Width { get; set; } = 7;
 
     public GameMap()
     {
-        GameObjects = new object[5, 5];
+        GameObjects = new object[6, 5];
         for (int i = 0; i < GameObjects.GetLength(0); i++)
         {
             for (int j = 0; j < GameObjects.GetLength(1); j++)
