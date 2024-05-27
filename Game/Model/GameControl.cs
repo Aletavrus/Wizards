@@ -7,8 +7,8 @@ namespace Game.Model;
 
 public class GameControl
 {
-	PlayerBase player {  get; set; }
-	Fireball fireball { get; set; }
+	public PlayerBase Player {  get; set; }
+	public Fireball Fireball { get; set; }
 
     public double xDiff {get; set; }
     public double yDiff {get; set; }
@@ -19,13 +19,13 @@ public class GameControl
 		set
 		{
 			targetLocation = value;
-			xDiff = targetLocation.X / 100;
-			yDiff = targetLocation.Y / 100;
+			xDiff = (targetLocation.X-Fireball.Location.X) / 100;
+			yDiff = (targetLocation.Y-Fireball.Location.Y) / 100;
 		}
 	}
     public GameControl(PlayerBase player, Fireball fireball)
 	{
-		this.player = player;
-		this.fireball = fireball;
+		this.Player = player;
+		this.Fireball = fireball;
 	}
 }

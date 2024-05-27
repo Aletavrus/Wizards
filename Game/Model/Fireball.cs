@@ -10,6 +10,8 @@ public class Fireball : GameObject
 {
     public bool Active { get; set; }
     public bool OnArea {  get; set; }
+    public double sizeDiff = 0.1D;
+    public bool fireGrowing = false;
 	public Fireball(Point location):base(location)
 	{
         Active = false;
