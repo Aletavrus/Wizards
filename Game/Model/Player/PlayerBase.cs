@@ -17,7 +17,7 @@ public abstract class PlayerBase : GameObject
 	public SpellAOE spellAOE;
 
 	// Map
-	private GameMap _map;
+	public GameMap GameMap {get; set;}
 
 	// Health and position
 	public int health = 100;
@@ -36,10 +36,12 @@ public abstract class PlayerBase : GameObject
 	// Stamina
 	protected int stamina = 10;
 	
-    public PlayerBase(Point location, SpellTargeted spellTargeted, SpellAOE spellAOE) : base(location)
+    public PlayerBase(Point location, SpellTargeted spellTargeted, SpellAOE spellAOE, GameMap gameMap) : base(location)
     {
 	    this.spellTargeted = spellTargeted;
 	    this.spellAOE = spellAOE;
+		GameMap = gameMap;
+		GameMap.PutValueToCell(1, Convert.ToInt16(location.X), Convert.ToInt16(location.Y));
     }
 
 	public void DoAction(Point location)
@@ -50,16 +52,17 @@ public abstract class PlayerBase : GameObject
                 Move(location);
                 break;
             case 1:
-                spellTargeted.Execute(location);
+                Damage(spellTargeted.Execute(location));
                 break;
             case 2:
-                spellAOE.Execute(location);
+                Damage(spellAOE.Execute(location));
                 break;
             default:
                 Log("[ERROR] INVALID TYPE OF SPELL");
                 break;
         }
-		currentAction = 0;
+        Log("Stopped casting spell");
+        currentAction = 0;
     }
 
     /// <summary>
@@ -75,10 +78,10 @@ public abstract class PlayerBase : GameObject
 		else
 		{
 			movesLeft -= cost; // Removing moves
-			//_map.PutValueToCell(0, Convert.ToInt32(Location.X), Convert.ToInt32(Location.Y)); // Changing old cell to 0
+			GameMap.PutValueToCell(0, Convert.ToInt32(Location.X), Convert.ToInt32(Location.Y)); // Changing old cell to 0
 			Location = newLocation;
-			Debug.WriteLine("Location changed");
-			//_map.PutValueToCell(1, Convert.ToInt32(newLocation.X), Convert.ToInt32(newLocation.Y)); // Changing new cell to 1
+			Log("Location changed");
+			GameMap.PutValueToCell(1, Convert.ToInt32(newLocation.X), Convert.ToInt32(newLocation.Y)); // Changing new cell to 1
 			movesLeft = 4; //THIS IS GOING TO BE INSIDE A MVM, BUT NOW IT'S HERE. AT THE END IT WILL RESET AFTER THE END OF A TURN
 		}
 	}

@@ -31,7 +31,7 @@ public class Fireball : GameObject
         }
     }
 
-    private double height = 1;
+    private double height = 1D;
     public double FireHeight
     {
         get
@@ -44,7 +44,7 @@ public class Fireball : GameObject
         }
     }
 
-    private double width = 1;
+    private double width = 1D;
     public double FireWidth
     {
         get

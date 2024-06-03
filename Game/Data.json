@@ -1,0 +1,24 @@
+[
+  {
+    "$type": "SpellTargeted",
+    "ClickCommand": {},
+    "Location": {
+      "X": 10,
+      "Y": 110
+    },
+    "Changing": {},
+    "Changed": {},
+    "ThrownExceptions": {}
+  },
+  {
+    "$type": "SpellAOE",
+    "ClickCommand": {},
+    "Location": {
+      "X": 610,
+      "Y": 110
+    },
+    "Changing": {},
+    "Changed": {},
+    "ThrownExceptions": {}
+  }
+]

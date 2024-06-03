@@ -10,41 +10,43 @@ namespace Game.Model.Spells;
 
 public class SpellAOE : SpellBase
 {
-    private static Random rand = new Random();
-
-    private MainViewModel viewModel;
-
-    private int aoeRange = 3;
+    public GameMap GameMap { get; set; }
+    public Point TargetLocation { get; set; }
+    public bool Active { get; set; }
+    public int AoeRange = 3;
     
-    public SpellAOE(Point location, MainViewModel viewModel) : base(location)
+    public SpellAOE(Point location, GameMap GameMap) : base(location, GameMap)
     {
         ClickCommand = ReactiveCommand.Create(Clicked);
-        this.viewModel = viewModel;
+        this.GameMap = GameMap;
     }
 
     public ICommand ClickCommand { get; }
 
     private void Clicked()
     {
-        viewModel.Player.CurrentAction = 2;
+        Active = true;
         Log("Spell icon clicked. Waiting for a cell click");
     }
     
-    public void Execute(Point location)
+    public int Execute(Point targetLocation)
     {
-        viewModel.GameControl.TargetLocation = location;
-        viewModel.Fireball.Active = true;
-        viewModel.Fireball.OnArea = true;
+        TargetLocation = targetLocation;
+        int damage = 0;
         Log("Clicked on cell. Executing spell");
-        if (Utilities.CountMovesFromCellToCell(location, viewModel.Player.Location) / MainViewModel.CellSize > aoeRange)
+        bool inArea = GameMap.InsideArea(Convert.ToInt16(targetLocation.X) / 100, Convert.ToInt16(targetLocation.Y) / 100, AoeRange);
+
+
+        if (!inArea)
         {
             Log("Player too far away");
         }
         else
         {
             Log("Player got in AOE. Damaging player");
-            viewModel.Player.Damage(rand.Next(0, 10));
+            damage = Random.Shared.Next(0, 10);
         }
         Log("Stopped casting spell");
+        return damage;
     }
 }

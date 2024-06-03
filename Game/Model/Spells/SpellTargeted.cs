@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
 using Avalonia;
-using DynamicData;
 using Game.Model.Player;
 using Game.ViewModels;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -11,37 +10,39 @@ namespace Game.Model.Spells;
 
 public class SpellTargeted : SpellBase
 {
-    private static Random rand = new Random();
+    public GameMap GameMap { get; set; }
+    public Point TargetLocation { get; set; }
+    public bool Active { get; set; }
 
-    private MainViewModel viewModel;
-    public SpellTargeted(Point location, MainViewModel viewModel) : base(location)
+    public SpellTargeted(Point location, GameMap GameMap) : base(location, GameMap)
     {
         ClickCommand = ReactiveCommand.Create(Clicked);
-        this.viewModel = viewModel;
+        this.GameMap = GameMap;
     }
 
     public ICommand ClickCommand { get; }
 
     private void Clicked()
     {
-        viewModel.Player.CurrentAction = 1;
+        Active = true;
         Log("Spell icon clicked. Waiting for a cell click");
     }
 
-    public void Execute(Point location)
+    public int Execute(Point location)
     {
-        viewModel.GameControl.TargetLocation = location;
-        viewModel.Fireball.Active = true;
+        TargetLocation= location;
+        int damage = 0;
         Log("Clicked on cell. Executing spell");
-        if (viewModel.Player.Location != location)
+        if (GameMap.GameObjects[Convert.ToInt16(location.X)/100, Convert.ToInt16(location.Y)/100] != 1)
         {
             Log("Not on target. No damage");
         }
         else
         {
             Log("Player found. Damaging player");
-            viewModel.Player.Damage(rand.Next(0, 10));
+            damage = Random.Shared.Next(0, 10);
         }
         Log("Stopped casting spell");
+        return damage;
     }
 }

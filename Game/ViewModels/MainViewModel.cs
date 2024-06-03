@@ -13,28 +13,45 @@ using Game.Model.Spells;
 using Game.Views;
 using Avalonia.Controls;
 using ReactiveUI;
-using Tmds.DBus.Protocol;
+using System.IO;
 using Avalonia.Threading;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 namespace Game.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
+    public GameMap GameMap { get; set; }
     public const int CellSize = 100;
-
     public int Height { get; set; } = 5;
     public int Width { get; set; } = 7;
     public PlayerBase Player { get; set; }
     public Fireball Fireball { get; set; }
     public GameControl GameControl { get; set; }
     public DispatcherTimer Timer {  get; set; }
+    private const string path = "D:\\Git Projects\\Wizards\\Game\\Data.json";
+    private JsonSerializerOptions options = new JsonSerializerOptions()
+    {
+        WriteIndented = true,
+        Converters = { new JsonStringEnumConverter() },
+        IncludeFields = true
+    };
 
     public MainViewModel()
     {
+        //string data = File.ReadAllText(path);
+        //SpellBase[] spells = JsonSerializer.Deserialize<SpellBase[]>(data, options);
+        //foreach (var spell in spells)
+        //{
+        //    Debug.WriteLine($"Name:{spell.GetType()}, Location:{spell.Location}");
+        //}
+        GameMap GameMap = new GameMap();
+
         GameObjects = [];
-        Player = new PlayerClass1(
+        Player = new PlayerClass1( 
             new Point(3 * CellSize, 2 * CellSize),
-            new SpellTargeted(new Point(10, CellSize + 10), this),
-            new SpellAOE(new Point((Width - 1) * CellSize + 10, CellSize + 10), this));
+            new SpellTargeted(new Point(10, CellSize + 10), GameMap),
+            new SpellAOE(new Point((Width - 1) * CellSize + 10, CellSize + 10), GameMap));
         GameObjects.Add(Player);
         for (int i = 1; i < 6; i++)
         {
@@ -43,11 +60,19 @@ public partial class MainViewModel : ViewModelBase
                 GameObjects.Add(new MapCell(new Point(i * CellSize, j * CellSize), this));
             }
         }
-        
+
         GameObjects.Add(Player.spellTargeted);
         GameObjects.Add(Player.spellAOE);
         Fireball = new Fireball(new Point(0, 0));
         GameObjects.Add(Fireball);
+
+        //SpellBase[] spells = new SpellBase[]
+        //{
+        //    Player.spellTargeted,
+        //    Player.spellAOE
+        //};
+        //string data = JsonSerializer.Serialize<SpellBase[]>(spells, options);
+        //File.WriteAllText(path, data);
 
         GameControl = new(Player, Fireball);
         GameControl.TargetLocation = new Point(0, 0);
@@ -72,12 +97,29 @@ Other actions
 
     private void OnTimedEvent()
     {
+        if (Player.spellAOE.Active || Player.spellTargeted.Active)
+        {
+            Fireball.Active = true;
+            if (Player.spellAOE.Active)
+            {
+                Fireball.OnArea = true;
+            }
+        }
+        if (GameMap.GameObjects!=Player.GameMap.GameObjects)
+        {
+            GameMap.GameObjects = Player.GameMap.GameObjects;
+            Player.spellAOE.GameMap.GameObjects, Player.spellTargeted.GameMap.GameObjects = GameMap.GameObjects;
+        }
+
+
+
+
         if (Player.Location!=Fireball.Location && !Fireball.Active && Player.CurrentAction==0 && !Fireball.fireGrowing)
         {
             Fireball.Location = Player.Location;
             GameControl.Fireball.Location = Player.Location;
         }
-        if (Fireball.FireHeight==3)
+        if (Fireball.FireHeight>2.99D)
         {
             Fireball.fireGrowing = false;
             Fireball.FireHeight = 1;
@@ -109,8 +151,6 @@ Other actions
                 if (Fireball.OnArea)
                 {
                     Fireball.Location = new Point(Fireball.Location.X - 100, Fireball.Location.Y - 100);
-                    Fireball.FireHeight = 3;
-                    Fireball.FireWidth = 3;
                     Fireball.OnArea = false;
                     Fireball.fireGrowing = true;
                 }
