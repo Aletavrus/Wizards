@@ -45,13 +45,14 @@ public partial class MainViewModel : ViewModelBase
         //{
         //    Debug.WriteLine($"Name:{spell.GetType()}, Location:{spell.Location}");
         //}
-        GameMap GameMap = new GameMap();
+        GameMap = new GameMap();
 
         GameObjects = [];
         Player = new PlayerClass1( 
             new Point(3 * CellSize, 2 * CellSize),
             new SpellTargeted(new Point(10, CellSize + 10), GameMap),
-            new SpellAOE(new Point((Width - 1) * CellSize + 10, CellSize + 10), GameMap));
+            new SpellAOE(new Point((Width - 1) * CellSize + 10, CellSize + 10), GameMap),
+            GameMap);
         GameObjects.Add(Player);
         for (int i = 1; i < 6; i++)
         {
@@ -63,7 +64,7 @@ public partial class MainViewModel : ViewModelBase
 
         GameObjects.Add(Player.spellTargeted);
         GameObjects.Add(Player.spellAOE);
-        Fireball = new Fireball(new Point(0, 0));
+        Fireball = new Fireball(Player.Location);
         GameObjects.Add(Fireball);
 
         //SpellBase[] spells = new SpellBase[]
@@ -75,7 +76,7 @@ public partial class MainViewModel : ViewModelBase
         //File.WriteAllText(path, data);
 
         GameControl = new(Player, Fireball);
-        GameControl.TargetLocation = new Point(0, 0);
+        GameControl.TargetLocation = Player.Location;
 
         Timer = new DispatcherTimer();
         Timer.Interval = new TimeSpan(0, 0, 0, 0, 1000/60);
@@ -105,21 +106,15 @@ Other actions
                 Fireball.OnArea = true;
             }
         }
-        if (GameMap.GameObjects!=Player.GameMap.GameObjects)
-        {
-            GameMap.GameObjects = Player.GameMap.GameObjects;
-            Player.spellAOE.GameMap.GameObjects, Player.spellTargeted.GameMap.GameObjects = GameMap.GameObjects;
-        }
-
-
-
-
         if (Player.Location!=Fireball.Location && !Fireball.Active && Player.CurrentAction==0 && !Fireball.fireGrowing)
         {
             Fireball.Location = Player.Location;
             GameControl.Fireball.Location = Player.Location;
+            GameControl.TargetLocation = Player.Location;
+            Player.spellTargeted.TargetLocation = Player.Location;
+            Player.spellAOE.TargetLocation = Player.Location;
         }
-        if (Fireball.FireHeight>2.99D)
+        else if (Fireball.FireHeight>2.99D)
         {
             Fireball.fireGrowing = false;
             Fireball.FireHeight = 1;
@@ -146,7 +141,7 @@ Other actions
             {
                 Fireball.Location = new Point(Fireball.Location.X + GameControl.xDiff, Fireball.Location.Y + GameControl.yDiff);
             }
-            else if (GameControl.TargetLocation == Fireball.Location && Fireball.Location != Player.Location)
+            else if (GameControl.TargetLocation == Fireball.Location && Fireball.Location!=Player.Location)
             {
                 if (Fireball.OnArea)
                 {
@@ -160,6 +155,15 @@ Other actions
     }
     public void CellClicked(Point location)
     {
+        if (Player.spellTargeted.Active)
+        {
+            Player.CurrentAction = 1;
+        }
+        else if (Player.spellAOE.Active)
+        {
+            Player.CurrentAction = 2;
+        }
+        GameControl.TargetLocation = location;
         Player.DoAction(location);
     }
 

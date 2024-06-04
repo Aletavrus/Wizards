@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using System.Diagnostics;
 
 namespace Game.Model;
 
@@ -11,7 +12,7 @@ public class GameMap
 
     public GameMap()
     {
-        GameObjects = new int[6, 5];
+        GameObjects = new int[5, 5];
         for (int i = 0; i < GameObjects.GetLength(0); i++)
         {
             for (int j = 0; j < GameObjects.GetLength(1); j++)
@@ -30,9 +31,19 @@ public class GameMap
 
     public bool InsideArea(int x, int y, int range)
     {
-        for (int i =x; i < x+range; i++)
+        int maxY = GameObjects.GetLength(1);
+        if (y+range<maxY)
         {
-            for (int j = y; i < y + range; j++)
+            maxY = y+range;
+        }
+        int maxX = GameObjects.GetLength(0);
+        if (x+range<maxX)
+        {
+            maxX = x+range;
+        }
+        for (int i = x; i < maxX; i++)
+        {
+            for (int j = y; i < maxY; j++)
             {
                 if (GameObjects[i, j] == 1)
                 {

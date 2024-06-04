@@ -53,15 +53,16 @@ public abstract class PlayerBase : GameObject
                 break;
             case 1:
                 Damage(spellTargeted.Execute(location));
+				spellTargeted.Active = false;
                 break;
             case 2:
                 Damage(spellAOE.Execute(location));
+				spellAOE.Active = false;
                 break;
             default:
                 Log("[ERROR] INVALID TYPE OF SPELL");
                 break;
         }
-        Log("Stopped casting spell");
         currentAction = 0;
     }
 
@@ -83,6 +84,8 @@ public abstract class PlayerBase : GameObject
 			Log("Location changed");
 			GameMap.PutValueToCell(1, Convert.ToInt32(newLocation.X), Convert.ToInt32(newLocation.Y)); // Changing new cell to 1
 			movesLeft = 4; //THIS IS GOING TO BE INSIDE A MVM, BUT NOW IT'S HERE. AT THE END IT WILL RESET AFTER THE END OF A TURN
+			spellAOE.GameMap.GameObjects = GameMap.GameObjects;
+			spellTargeted.GameMap.GameObjects = GameMap.GameObjects;
 		}
 	}
 

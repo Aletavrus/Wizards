@@ -19,6 +19,7 @@ public class SpellAOE : SpellBase
     {
         ClickCommand = ReactiveCommand.Create(Clicked);
         this.GameMap = GameMap;
+        Active = false;
     }
 
     public ICommand ClickCommand { get; }
@@ -35,8 +36,6 @@ public class SpellAOE : SpellBase
         int damage = 0;
         Log("Clicked on cell. Executing spell");
         bool inArea = GameMap.InsideArea(Convert.ToInt16(targetLocation.X) / 100, Convert.ToInt16(targetLocation.Y) / 100, AoeRange);
-
-
         if (!inArea)
         {
             Log("Player too far away");
@@ -44,9 +43,10 @@ public class SpellAOE : SpellBase
         else
         {
             Log("Player got in AOE. Damaging player");
-            damage = Random.Shared.Next(0, 10);
+            damage = Random.Shared.Next(0, 11);
         }
         Log("Stopped casting spell");
+        Active = false;
         return damage;
     }
 }

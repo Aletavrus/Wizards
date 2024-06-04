@@ -18,6 +18,7 @@ public class SpellTargeted : SpellBase
     {
         ClickCommand = ReactiveCommand.Create(Clicked);
         this.GameMap = GameMap;
+        Active = false;
     }
 
     public ICommand ClickCommand { get; }
@@ -40,9 +41,10 @@ public class SpellTargeted : SpellBase
         else
         {
             Log("Player found. Damaging player");
-            damage = Random.Shared.Next(0, 10);
+            damage = Random.Shared.Next(0, 11);
         }
         Log("Stopped casting spell");
+        Active = false;
         return damage;
     }
 }
