@@ -11,6 +11,7 @@ public class Fireball : GameObject
     public bool Active { get; set; }
     public bool OnArea {  get; set; }
     public double sizeDiff = 0.1D;
+    public double MaxSize = 5.99D;
     public bool fireGrowing = false;
 	public Fireball(Point location):base(location)
 	{
@@ -55,5 +56,20 @@ public class Fireball : GameObject
         {
             this.RaiseAndSetIfChanged(ref width, value);
         }
+    }
+
+    public void ChangeCoordinates()
+    {
+        double leftX = Location.X - 100;
+        if (leftX < 0)
+        {
+            leftX = Location.X;
+        }
+        double leftY = Location.Y - 100;
+        if (leftY < 0)
+        {
+            leftY = Location.Y;
+        }
+        Location = new Point(leftX, leftY);
     }
 }

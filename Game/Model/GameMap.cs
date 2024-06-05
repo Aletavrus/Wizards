@@ -7,12 +7,12 @@ namespace Game.Model;
 public class GameMap
 {
     public const int CellSize = 100;
-    public int Height { get; set; } = 7;
-    public int Width { get; set; } = 5;
+    public int Height { get; set; } = 8;
+    public int Width { get; set; } = 8;
 
     public GameMap()
     {
-        GameObjects = new int[5, 5];
+        GameObjects = new int[8, 7];
         for (int i = 0; i < GameObjects.GetLength(0); i++)
         {
             for (int j = 0; j < GameObjects.GetLength(1); j++)
@@ -31,19 +31,29 @@ public class GameMap
 
     public bool InsideArea(int x, int y, int range)
     {
-        int maxY = GameObjects.GetLength(1);
-        if (y+range<maxY)
+        int minX = x - 1;
+        if (x - 1 < 0)
         {
-            maxY = y+range;
+            minX = x;
+        }
+        int minY = y - 1;
+        if (y - 1 < 0)
+        {
+            minY = y;
         }
         int maxX = GameObjects.GetLength(0);
-        if (x+range<maxX)
+        if (x - 1 + range < maxX)
         {
-            maxX = x+range;
+            maxX = x - 1 + range;
         }
-        for (int i = x; i < maxX; i++)
+        int maxY = GameObjects.GetLength(1);
+        if (y - 1 + range < maxY)
         {
-            for (int j = y; i < maxY; j++)
+            maxY = y - 1 + range;
+        }
+        for (int i = minX; i < maxX; i++)
+        {
+            for (int j = minY; j < maxY; j++)
             {
                 if (GameObjects[i, j] == 1)
                 {

@@ -23,8 +23,8 @@ public partial class MainViewModel : ViewModelBase
 {
     public GameMap GameMap { get; set; }
     public const int CellSize = 100;
-    public int Height { get; set; } = 5;
-    public int Width { get; set; } = 7;
+    public int Height { get; set; } = 8;
+    public int Width { get; set; } = 9;
     public PlayerBase Player { get; set; }
     public Fireball Fireball { get; set; }
     public GameControl GameControl { get; set; }
@@ -50,13 +50,13 @@ public partial class MainViewModel : ViewModelBase
         GameObjects = [];
         Player = new PlayerClass1( 
             new Point(3 * CellSize, 2 * CellSize),
-            new SpellTargeted(new Point(10, CellSize + 10), GameMap),
-            new SpellAOE(new Point((Width - 1) * CellSize + 10, CellSize + 10), GameMap),
+            new SpellTargeted(new Point(10, 3*CellSize + 10), GameMap),
+            new SpellAOE(new Point((Width - 1) * CellSize + 10, 3*CellSize + 10), GameMap),
             GameMap);
         GameObjects.Add(Player);
-        for (int i = 1; i < 6; i++)
+        for (int i = 1; i < 8; i++)
         {
-            for (int j = 0; j < 5; j++)
+            for (int j = 0; j < 7; j++)
             {
                 GameObjects.Add(new MapCell(new Point(i * CellSize, j * CellSize), this));
             }
@@ -114,7 +114,7 @@ Other actions
             Player.spellTargeted.TargetLocation = Player.Location;
             Player.spellAOE.TargetLocation = Player.Location;
         }
-        else if (Fireball.FireHeight>2.99D)
+        else if (Fireball.FireHeight>Fireball.MaxSize)
         {
             Fireball.fireGrowing = false;
             Fireball.FireHeight = 1;
@@ -145,7 +145,7 @@ Other actions
             {
                 if (Fireball.OnArea)
                 {
-                    Fireball.Location = new Point(Fireball.Location.X - 100, Fireball.Location.Y - 100);
+                    Fireball.ChangeCoordinates();
                     Fireball.OnArea = false;
                     Fireball.fireGrowing = true;
                 }

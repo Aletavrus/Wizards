@@ -6,8 +6,8 @@
         xmlns:views="clr-namespace:Game.Views"
         xmlns:local="clr-namespace:Game.Infrastructure"
         mc:Ignorable="d" 
-        d:DesignWidth="800"
-        d:DesignHeight="450"
+        d:DesignWidth="1920"
+        d:DesignHeight="1080"
         x:Class="Game.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Game">

@@ -41,7 +41,7 @@ public class SpellTargeted : SpellBase
         else
         {
             Log("Player found. Damaging player");
-            damage = Random.Shared.Next(0, 11);
+            damage = Random.Shared.Next(1, 11);
         }
         Log("Stopped casting spell");
         Active = false;

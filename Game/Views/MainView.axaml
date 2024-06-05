@@ -8,8 +8,8 @@
              xmlns:models="clr-namespace:Game.Model.Spells;assembly=Game"
              xmlns:vm="clr-namespace:Game.ViewModels"
              mc:Ignorable="d"
-             Width="700"
-             Height="700"
+             Width="1920"
+             Height="1080"
              x:Class="Game.Views.MainView"
              x:DataType="vm:MainViewModel">
   <UserControl.Styles>
@@ -27,7 +27,8 @@
   </UserControl.Styles>
   <ItemsControl ItemsSource="{Binding GameObjects}"
                 Width="{Binding Width, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}"
-                Height="{Binding Height, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}">
+                Height="{Binding Height, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}"
+				VerticalAlignment="Center">
 
     <ItemsControl.ItemsPanel>
       <ItemsPanelTemplate>

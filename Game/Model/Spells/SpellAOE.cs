@@ -43,7 +43,7 @@ public class SpellAOE : SpellBase
         else
         {
             Log("Player got in AOE. Damaging player");
-            damage = Random.Shared.Next(0, 11);
+            damage = Random.Shared.Next(1, 11);
         }
         Log("Stopped casting spell");
         Active = false;
