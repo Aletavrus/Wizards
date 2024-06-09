@@ -31,25 +31,25 @@ public class GameMap
 
     public bool InsideArea(int x, int y, int range)
     {
-        int minX = x - 1;
-        if (x - 1 < 0)
+        int minX = x - range;
+        if (x - range < 0)
         {
             minX = x;
         }
-        int minY = y - 1;
-        if (y - 1 < 0)
+        int minY = y - range;
+        if (y - range < 0)
         {
             minY = y;
         }
         int maxX = GameObjects.GetLength(0);
-        if (x - 1 + range < maxX)
+        if (x + range < maxX)
         {
-            maxX = x - 1 + range;
+            maxX = x + range;
         }
         int maxY = GameObjects.GetLength(1);
-        if (y - 1 + range < maxY)
+        if (y + range < maxY)
         {
-            maxY = y - 1 + range;
+            maxY = y + range;
         }
         for (int i = minX; i < maxX; i++)
         {

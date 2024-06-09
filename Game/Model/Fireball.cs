@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows.Input;
 using Avalonia;
 using Game.ViewModels;
@@ -11,7 +12,7 @@ public class Fireball : GameObject
     public bool Active { get; set; }
     public bool OnArea {  get; set; }
     public double sizeDiff = 0.1D;
-    public double MaxSize = 5.99D;
+    public double MaxSize = 2.99D;
     public bool fireGrowing = false;
 	public Fireball(Point location):base(location)
 	{
@@ -58,7 +59,7 @@ public class Fireball : GameObject
         }
     }
 
-    public void ChangeCoordinates()
+    public void MoveToArea()
     {
         double leftX = Location.X - 100;
         if (leftX < 0)
@@ -71,5 +72,16 @@ public class Fireball : GameObject
             leftY = Location.Y;
         }
         Location = new Point(leftX, leftY);
+    }
+
+    public void ChangeState()
+    {
+        Active = !Active;
+        if (Active)
+        {
+            FireOpacity = 1.0;
+            return;
+        }
+        FireOpacity = 0.0;
     }
 }

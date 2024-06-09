@@ -12,11 +12,13 @@ public class SpellBase : GameObject
 {
     private Point _location;
     public GameMap GameMap { get; set; }
+    public bool InvokeCommand { get; set; }
 
     public SpellBase(Point location, GameMap GameMap) : base(location)
     {
         Location = location;
         this.GameMap = GameMap;
+        InvokeCommand = true;
     }
     public Point Location
     {

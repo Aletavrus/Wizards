@@ -63,7 +63,6 @@ public abstract class PlayerBase : GameObject
                 Log("[ERROR] INVALID TYPE OF SPELL");
                 break;
         }
-        currentAction = 0;
     }
 
     /// <summary>

@@ -11,7 +11,6 @@ namespace Game.Model.Spells;
 public class SpellTargeted : SpellBase
 {
     public GameMap GameMap { get; set; }
-    public Point TargetLocation { get; set; }
     public bool Active { get; set; }
 
     public SpellTargeted(Point location, GameMap GameMap) : base(location, GameMap)
@@ -25,13 +24,17 @@ public class SpellTargeted : SpellBase
 
     private void Clicked()
     {
-        Active = true;
-        Log("Spell icon clicked. Waiting for a cell click");
+        if (InvokeCommand)
+        {
+            Active = !Active;
+            Log("Spell icon clicked. Waiting for a cell click");
+            return;
+        }
+        Log("Doing other action");
     }
 
     public int Execute(Point location)
     {
-        TargetLocation= location;
         int damage = 0;
         Log("Clicked on cell. Executing spell");
         if (GameMap.GameObjects[Convert.ToInt16(location.X)/100, Convert.ToInt16(location.Y)/100] != 1)

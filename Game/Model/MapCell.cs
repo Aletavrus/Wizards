@@ -11,10 +11,12 @@ namespace Game.Model;
 internal class MapCell : GameObject
 {
     private MainViewModel viewModel;
+    public bool InvokeCommand { get; set; }
 
     public MapCell(Point location, MainViewModel viewModel) : base(location)
     {
         CellClickCommand = ReactiveCommand.Create(CellClick);
+        InvokeCommand = true;
         this.viewModel = viewModel;
     }
 
@@ -22,7 +24,10 @@ internal class MapCell : GameObject
 
     private void CellClick()
     {
-        viewModel.CellClicked(Location);
+        if (InvokeCommand)
+        {
+            viewModel.CellClicked(Location);
+        }
     }
 
 

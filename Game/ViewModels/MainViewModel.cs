@@ -17,6 +17,9 @@ using System.IO;
 using Avalonia.Threading;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 namespace Game.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
@@ -98,59 +101,52 @@ Other actions
 
     private void OnTimedEvent()
     {
-        if (Player.spellAOE.Active || Player.spellTargeted.Active)
-        {
-            Fireball.Active = true;
-            if (Player.spellAOE.Active)
-            {
-                Fireball.OnArea = true;
-            }
-        }
-        if (Player.Location!=Fireball.Location && !Fireball.Active && Player.CurrentAction==0 && !Fireball.fireGrowing)
+        //if (isSpellActive() && !Fireball.Active) //synchronization between spells and fireball if something has changed
+        //{
+        //    if (Player.spellAOE.Active)
+        //    {
+        //        Fireball.OnArea = true;
+        //    }
+        //    Fireball.Active = true;
+        //}
+        if (fireballToPlayer()) //moving fireball's starting location, when player's location changes
         {
             Fireball.Location = Player.Location;
             GameControl.Fireball.Location = Player.Location;
             GameControl.TargetLocation = Player.Location;
-            Player.spellTargeted.TargetLocation = Player.Location;
-            Player.spellAOE.TargetLocation = Player.Location;
+            return;
         }
-        else if (Fireball.FireHeight>Fireball.MaxSize)
+        if (Fireball.FireHeight > Fireball.MaxSize) //controlling an area of the fireball (when using spellAOE)
         {
             Fireball.fireGrowing = false;
             Fireball.FireHeight = 1;
             Fireball.FireWidth = 1;
-            GameControl.TargetLocation = Player.Location;
-            Fireball.Location = Player.Location;
+            Fireball.FireOpacity = 0.0;
+            return;
         }
-        else if (Fireball.fireGrowing)
+        if (Fireball.fireGrowing) //growing when AOE used
         {
             Fireball.FireHeight += Fireball.sizeDiff;
             Fireball.FireWidth += Fireball.sizeDiff;
+            return;
         }
-        else
+
+        if (fireballMoves()) //checking if fireball is moving to the target
         {
-            if (!Fireball.Active)
+            Fireball.Location = new Point(Fireball.Location.X + GameControl.xDiff, Fireball.Location.Y + GameControl.yDiff);
+        }
+        else if (GameControl.TargetLocation == Fireball.Location && Fireball.Location!=Player.Location) //in case when its on target, but not inside a player
+        {
+            Fireball.ChangeState();
+            ChangeInvokeCommand();
+            if (Fireball.OnArea)
             {
-                Fireball.FireOpacity = 0.0;
-            }
-            else if (Fireball.Active)
-            {
+                Fireball.MoveToArea();
+                Fireball.OnArea = false;
+                Fireball.fireGrowing = true;
                 Fireball.FireOpacity = 1.0;
             }
-            if (GameControl.TargetLocation != Fireball.Location && Fireball.Active)
-            {
-                Fireball.Location = new Point(Fireball.Location.X + GameControl.xDiff, Fireball.Location.Y + GameControl.yDiff);
-            }
-            else if (GameControl.TargetLocation == Fireball.Location && Fireball.Location!=Player.Location)
-            {
-                if (Fireball.OnArea)
-                {
-                    Fireball.ChangeCoordinates();
-                    Fireball.OnArea = false;
-                    Fireball.fireGrowing = true;
-                }
-                Fireball.Active = false;
-            }
+            Player.CurrentAction = 0; 
         }
     }
     public void CellClicked(Point location)
@@ -162,9 +158,39 @@ Other actions
         else if (Player.spellAOE.Active)
         {
             Player.CurrentAction = 2;
+            Fireball.OnArea = true;
+        }
+        if (Player.CurrentAction !=0)
+        {
+            ChangeInvokeCommand(); //to stop any interactions while some spell is being casted
+            Fireball.ChangeState();
         }
         GameControl.TargetLocation = location;
         Player.DoAction(location);
+    }
+
+
+    private bool isSpellActive()
+    {
+        return Player.spellAOE.Active || Player.spellTargeted.Active;
+    }
+    private bool fireballToPlayer()
+    {
+        return Player.Location != Fireball.Location && !Fireball.Active && Player.CurrentAction == 0 && !Fireball.fireGrowing;
+    }
+    private bool fireballMoves()
+    {
+        return GameControl.TargetLocation != Fireball.Location && Fireball.Active;
+    }
+    private void ChangeInvokeCommand()
+    {
+        var mapCells = GameObjects.OfType<MapCell>().ToList();
+        foreach (MapCell mapCell in mapCells)
+        {
+            mapCell.InvokeCommand = !mapCell.InvokeCommand;
+        }
+        Player.spellAOE.InvokeCommand = !Player.spellAOE.InvokeCommand;
+        Player.spellTargeted.InvokeCommand = !Player.spellTargeted.InvokeCommand;
     }
 
     public ObservableCollection<GameObject> GameObjects { get; set; }    

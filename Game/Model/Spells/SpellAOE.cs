@@ -11,7 +11,6 @@ namespace Game.Model.Spells;
 public class SpellAOE : SpellBase
 {
     public GameMap GameMap { get; set; }
-    public Point TargetLocation { get; set; }
     public bool Active { get; set; }
     public int AoeRange = 3;
     
@@ -26,16 +25,20 @@ public class SpellAOE : SpellBase
 
     private void Clicked()
     {
-        Active = true;
-        Log("Spell icon clicked. Waiting for a cell click");
+        if (InvokeCommand)
+        {
+            Active = !Active;
+            Log("Spell icon clicked. Waiting for a cell click");
+            return;
+        }
+        Log("Doing other action");
     }
     
-    public int Execute(Point targetLocation)
+    public int Execute(Point location)
     {
-        TargetLocation = targetLocation;
         int damage = 0;
         Log("Clicked on cell. Executing spell");
-        bool inArea = GameMap.InsideArea(Convert.ToInt16(targetLocation.X) / 100, Convert.ToInt16(targetLocation.Y) / 100, AoeRange);
+        bool inArea = GameMap.InsideArea(Convert.ToInt16(location.X) / 100, Convert.ToInt16(location.Y) / 100, AoeRange);
         if (!inArea)
         {
             Log("Player too far away");
