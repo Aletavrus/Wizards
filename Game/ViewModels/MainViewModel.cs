@@ -20,15 +20,22 @@ using System.Text.Json.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Avalonia.Controls.Primitives;
+
 namespace Game.ViewModels;
 
-public partial class MainViewModel : ViewModelBase
+public class MainViewModel : ViewModelBase
 {
     public GameMap GameMap { get; set; }
     public const int CellSize = 100;
     public int Height { get; set; } = 8;
     public int Width { get; set; } = 9;
     public PlayerBase Player { get; set; }
+    public PlayerBase Player1 { get; set; }
+    public PlayerBase Player2 { get; set; }
+
+    public SpellButtonAOE SpellButtonAOE { get; set; }
+    public SpellButtonTargeted SpellButtonTargeted { get; set; }
     public Fireball Fireball { get; set; }
     public GameControl GameControl { get; set; }
     public DispatcherTimer Timer {  get; set; }
@@ -51,12 +58,35 @@ public partial class MainViewModel : ViewModelBase
         GameMap = new GameMap();
 
         GameObjects = [];
-        Player = new PlayerClass1( 
+        
+        // Creating first player
+        Player1 = new PlayerBase( 
+            new Point(3 * CellSize, 5 * CellSize),
+            new SpellTargeted(new Point(10, 3*CellSize + 10), GameMap),
+            new SpellAOE(new Point((Width - 1) * CellSize + 10, 3*CellSize + 10), GameMap),
+            GameMap, this);
+        
+        // Creating second player
+        Player2 = new PlayerBase( 
             new Point(3 * CellSize, 2 * CellSize),
             new SpellTargeted(new Point(10, 3*CellSize + 10), GameMap),
             new SpellAOE(new Point((Width - 1) * CellSize + 10, 3*CellSize + 10), GameMap),
-            GameMap);
-        GameObjects.Add(Player);
+            GameMap, this);
+
+        // Adding two players to game objects
+        GameObjects.Add(Player1);
+        GameObjects.Add(Player2);
+        
+        // Setting Player1 as current player
+        Player = Player1;
+
+        // Creating buttons for spells
+        SpellButtonTargeted = new SpellButtonTargeted(new Point(10, 3*CellSize + 10), GameMap, this);
+        SpellButtonAOE = new SpellButtonAOE(new Point((Width - 1) * CellSize + 10, 3 * CellSize + 10), GameMap, this);
+        
+        GameObjects.Add(SpellButtonTargeted);
+        GameObjects.Add(SpellButtonAOE);
+        
         for (int i = 1; i < 8; i++)
         {
             for (int j = 0; j < 7; j++)
@@ -65,8 +95,8 @@ public partial class MainViewModel : ViewModelBase
             }
         }
 
-        GameObjects.Add(Player.spellTargeted);
-        GameObjects.Add(Player.spellAOE);
+        // GameObjects.Add(Player.spellTargeted);
+        // GameObjects.Add(Player.spellAOE);
         Fireball = new Fireball(Player.Location);
         GameObjects.Add(Fireball);
 
@@ -151,11 +181,11 @@ Other actions
     }
     public void CellClicked(Point location)
     {
-        if (Player.spellTargeted.Active)
+        if (SpellButtonTargeted.Active)
         {
             Player.CurrentAction = 1;
         }
-        else if (Player.spellAOE.Active)
+        else if (SpellButtonAOE.Active)
         {
             Player.CurrentAction = 2;
             Fireball.OnArea = true;
@@ -193,5 +223,10 @@ Other actions
         Player.spellTargeted.InvokeCommand = !Player.spellTargeted.InvokeCommand;
     }
 
-    public ObservableCollection<GameObject> GameObjects { get; set; }    
+    public ObservableCollection<GameObject> GameObjects { get; set; }
+
+    public void MoveFinished()
+    {
+        Player = Player == Player1 ? Player2 : Player1;
+    }
 }

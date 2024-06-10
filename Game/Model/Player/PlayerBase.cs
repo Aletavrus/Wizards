@@ -7,10 +7,11 @@ using ReactiveUI;
 using Game.Model.Spells;
 using System.Diagnostics;
 using Avalonia.Remote.Protocol.Input;
+using Game.ViewModels;
 
 namespace Game.Model.Player;
 
-public abstract class PlayerBase : GameObject
+public class PlayerBase : GameObject
 {
 	// Spells
 	public SpellTargeted spellTargeted;
@@ -35,11 +36,14 @@ public abstract class PlayerBase : GameObject
 
 	// Stamina
 	protected int stamina = 10;
+
+	protected MainViewModel mainViewModel;
 	
-    public PlayerBase(Point location, SpellTargeted spellTargeted, SpellAOE spellAOE, GameMap gameMap) : base(location)
+    public PlayerBase(Point location, SpellTargeted spellTargeted, SpellAOE spellAOE, GameMap gameMap, MainViewModel mainViewModel) : base(location)
     {
 	    this.spellTargeted = spellTargeted;
 	    this.spellAOE = spellAOE;
+	    this.mainViewModel = mainViewModel;
 		GameMap = gameMap;
 		GameMap.PutValueToCell(1, Convert.ToInt16(location.X), Convert.ToInt16(location.Y));
     }
@@ -54,10 +58,12 @@ public abstract class PlayerBase : GameObject
             case 1:
                 Damage(spellTargeted.Execute(location));
 				spellTargeted.Active = false;
+				mainViewModel.SpellButtonTargeted.Active = false;
                 break;
             case 2:
                 Damage(spellAOE.Execute(location));
 				spellAOE.Active = false;
+				mainViewModel.SpellButtonAOE.Active = false;
                 break;
             default:
                 Log("[ERROR] INVALID TYPE OF SPELL");
@@ -85,6 +91,7 @@ public abstract class PlayerBase : GameObject
 			movesLeft = 4; //THIS IS GOING TO BE INSIDE A MVM, BUT NOW IT'S HERE. AT THE END IT WILL RESET AFTER THE END OF A TURN
 			spellAOE.GameMap.GameObjects = GameMap.GameObjects;
 			spellTargeted.GameMap.GameObjects = GameMap.GameObjects;
+			mainViewModel.MoveFinished();
 		}
 	}
 

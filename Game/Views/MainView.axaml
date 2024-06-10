@@ -63,7 +63,7 @@
 		  </Button>
       </DataTemplate>
 
-      <DataTemplate DataType="{x:Type modelp:PlayerClass1}">
+      <DataTemplate DataType="{x:Type modelp:PlayerBase}">
         <Image Width="100" 
                Height="100" 
                Source="resm:Avalonia.Skia.Assets.NoiseAsset_256X256_PNG.png?assembly=Avalonia.Skia" />
