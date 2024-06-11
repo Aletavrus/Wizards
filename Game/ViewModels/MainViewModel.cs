@@ -62,15 +62,15 @@ public class MainViewModel : ViewModelBase
         // Creating first player
         Player1 = new PlayerBase( 
             new Point(3 * CellSize, 5 * CellSize),
-            new SpellTargeted(new Point(10, 3*CellSize + 10), GameMap),
-            new SpellAOE(new Point((Width - 1) * CellSize + 10, 3*CellSize + 10), GameMap),
+            new SpellTargeted(GameMap),
+            new SpellAOE(GameMap),
             GameMap, this);
         
         // Creating second player
         Player2 = new PlayerBase( 
             new Point(3 * CellSize, 2 * CellSize),
-            new SpellTargeted(new Point(10, 3*CellSize + 10), GameMap),
-            new SpellAOE(new Point((Width - 1) * CellSize + 10, 3*CellSize + 10), GameMap),
+            new SpellTargeted(GameMap),
+            new SpellAOE(GameMap),
             GameMap, this);
 
         // Adding two players to game objects
