@@ -13,49 +13,50 @@ public class Fireball : GameObject
     public bool OnArea {  get; set; }
     public double sizeDiff = 0.1D;
     public double MaxSize = 2.99D;
-    public bool fireGrowing = false;
+    public bool FireGrowing {get; set; }
 	public Fireball(Point location):base(location)
 	{
         Active = false;
         OnArea = false;
+        FireGrowing = false;
 	}
 
-    private double fireOpacity = 0.0;
-    public double FireOpacity
+    private double _opacity = 0.0;
+    public double Opacity
     {
         get
         {
-            return fireOpacity;
+            return _opacity;
         }
         set
         {
-            this.RaiseAndSetIfChanged(ref fireOpacity, value);
+            this.RaiseAndSetIfChanged(ref _opacity, value);
         }
     }
 
-    private double height = 1D;
-    public double FireHeight
+    private double _height = 1D;
+    public double Height
     {
         get
         {
-            return height;
+            return _height;
         }
         set
         {
-            this.RaiseAndSetIfChanged(ref height, value);
+            this.RaiseAndSetIfChanged(ref _height, value);
         }
     }
 
-    private double width = 1D;
-    public double FireWidth
+    private double _width = 1D;
+    public double Width
     {
         get
         {
-            return width;
+            return _width;
         }
         set
         {
-            this.RaiseAndSetIfChanged(ref width, value);
+            this.RaiseAndSetIfChanged(ref _width, value);
         }
     }
 
@@ -79,9 +80,9 @@ public class Fireball : GameObject
         Active = !Active;
         if (Active)
         {
-            FireOpacity = 1.0;
+            Opacity = 1.0;
             return;
         }
-        FireOpacity = 0.0;
+        Opacity = 0.0;
     }
 }

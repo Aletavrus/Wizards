@@ -146,18 +146,18 @@ Other actions
             GameControl.TargetLocation = Player.Location;
             return;
         }
-        if (Fireball.FireHeight > Fireball.MaxSize) //controlling an area of the fireball (when using spellAOE)
+        if (Fireball.Height > Fireball.MaxSize) //controlling an area of the fireball (when using spellAOE)
         {
-            Fireball.fireGrowing = false;
-            Fireball.FireHeight = 1;
-            Fireball.FireWidth = 1;
-            Fireball.FireOpacity = 0.0;
+            Fireball.FireGrowing = false;
+            Fireball.Height = 1;
+            Fireball.Width = 1;
+            Fireball.Opacity = 0.0;
             return;
         }
-        if (Fireball.fireGrowing) //growing when AOE used
+        if (Fireball.FireGrowing) //growing when AOE used
         {
-            Fireball.FireHeight += Fireball.sizeDiff;
-            Fireball.FireWidth += Fireball.sizeDiff;
+            Fireball.Height += Fireball.sizeDiff;
+            Fireball.Width += Fireball.sizeDiff;
             return;
         }
 
@@ -173,8 +173,8 @@ Other actions
             {
                 Fireball.MoveToArea();
                 Fireball.OnArea = false;
-                Fireball.fireGrowing = true;
-                Fireball.FireOpacity = 1.0;
+                Fireball.FireGrowing = true;
+                Fireball.Opacity = 1.0;
             }
             Player.CurrentAction = 0; 
         }
@@ -206,7 +206,7 @@ Other actions
     }
     private bool fireballToPlayer()
     {
-        return Player.Location != Fireball.Location && !Fireball.Active && Player.CurrentAction == 0 && !Fireball.fireGrowing;
+        return Player.Location != Fireball.Location && !Fireball.Active && Player.CurrentAction == 0 && !Fireball.FireGrowing;
     }
     private bool fireballMoves()
     {
