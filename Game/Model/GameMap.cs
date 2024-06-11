@@ -7,7 +7,7 @@ namespace Game.Model;
 public class GameMap
 {
     public const int CellSize = 100;
-    public int Height { get; set; } = 8;
+    public int Height { get; set; } = 7;
     public int Width { get; set; } = 8;
 
     public GameMap()
@@ -41,6 +41,7 @@ public class GameMap
         {
             minY = y;
         }
+
         int maxX = GameObjects.GetLength(0);
         if (x + range < maxX)
         {
@@ -51,6 +52,7 @@ public class GameMap
         {
             maxY = y + range;
         }
+
         for (int i = minX; i < maxX; i++)
         {
             for (int j = minY; j < maxY; j++)

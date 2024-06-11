@@ -28,7 +28,7 @@ public class MainViewModel : ViewModelBase
 {
     public GameMap GameMap { get; set; }
     public const int CellSize = 100;
-    public int Height { get; set; } = 8;
+    public int Height { get; set; } = 7;
     public int Width { get; set; } = 9;
     public PlayerBase Player { get; set; }
     public PlayerBase Player1 { get; set; }
@@ -146,7 +146,7 @@ Other actions
             GameControl.TargetLocation = Player.Location;
             return;
         }
-        if (Fireball.Height > Fireball.MaxSize) //controlling an area of the fireball (when using spellAOE)
+        if (Fireball.Height > Fireball.MaxSize || nearBorder()) //controlling an area of the fireball (when using spellAOE)
         {
             Fireball.FireGrowing = false;
             Fireball.Height = 1;
@@ -211,6 +211,10 @@ Other actions
     private bool fireballMoves()
     {
         return GameControl.TargetLocation != Fireball.Location && Fireball.Active;
+    }
+    private bool nearBorder()
+    {
+        return Fireball.Location.X + (Fireball.Width*CellSize) > (Width-1)*CellSize || Fireball.Location.Y + (Fireball.Height * CellSize) > Height * CellSize;
     }
     private void ChangeInvokeCommand()
     {
