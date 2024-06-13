@@ -9,7 +9,7 @@ public class SpellButtonTargeted : SpellBase
 {
     public bool Active { get; set; }
     
-    public SpellButtonTargeted(Point location, GameMap GameMap, MainViewModel mainViewModel) : base(location, GameMap)
+    public SpellButtonTargeted(Point location, GameMap GameMap) : base(location, GameMap)
     {
         ClickCommand = ReactiveCommand.Create(Clicked);
         this.GameMap = GameMap;

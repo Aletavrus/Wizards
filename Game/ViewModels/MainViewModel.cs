@@ -33,12 +33,15 @@ public class MainViewModel : ViewModelBase
     public PlayerBase Player { get; set; }
     public PlayerBase Player1 { get; set; }
     public PlayerBase Player2 { get; set; }
+    private int index = 0;
+    PlayerBase[] Players { get; set; }
 
     public SpellButtonAOE SpellButtonAOE { get; set; }
     public SpellButtonTargeted SpellButtonTargeted { get; set; }
     public Fireball Fireball { get; set; }
     public GameControl GameControl { get; set; }
     public DispatcherTimer Timer {  get; set; }
+
     private const string path = "D:\\Git Projects\\Wizards\\Game\\Data.json";
     private JsonSerializerOptions options = new JsonSerializerOptions()
     {
@@ -46,6 +49,7 @@ public class MainViewModel : ViewModelBase
         Converters = { new JsonStringEnumConverter() },
         IncludeFields = true
     };
+
 
     public MainViewModel()
     {
@@ -58,31 +62,38 @@ public class MainViewModel : ViewModelBase
         GameMap = new GameMap();
 
         GameObjects = [];
-        
+
         // Creating first player
         Player1 = new PlayerBase( 
             new Point(3 * CellSize, 5 * CellSize),
             new SpellTargeted(GameMap),
             new SpellAOE(GameMap),
-            GameMap, this);
+            GameMap);
         
         // Creating second player
         Player2 = new PlayerBase( 
             new Point(3 * CellSize, 2 * CellSize),
             new SpellTargeted(GameMap),
             new SpellAOE(GameMap),
-            GameMap, this);
+            GameMap);
 
         // Adding two players to game objects
         GameObjects.Add(Player1);
         GameObjects.Add(Player2);
+
+        // Creating array of players
+        Players = new PlayerBase[]{ Player1, Player2 };
+        for (int i = 0; i<Players.Length; i++)
+        {
+            Players[i].GameMap.PutValueToCell(i, Convert.ToInt16(Players[i].Location.X), Convert.ToInt16(Players[i].Location.Y));
+        }
         
-        // Setting Player1 as current player
-        Player = Player1;
+        // Setting Player1 as a current player
+        Player = Players[index];
 
         // Creating buttons for spells
-        SpellButtonTargeted = new SpellButtonTargeted(new Point(10, 3*CellSize + 10), GameMap, this);
-        SpellButtonAOE = new SpellButtonAOE(new Point((Width - 1) * CellSize + 10, 3 * CellSize + 10), GameMap, this);
+        SpellButtonTargeted = new SpellButtonTargeted(new Point(10, 3*CellSize + 10), GameMap);
+        SpellButtonAOE = new SpellButtonAOE(new Point((Width - 1) * CellSize + 10, 3 * CellSize + 10), GameMap);
         
         GameObjects.Add(SpellButtonTargeted);
         GameObjects.Add(SpellButtonAOE);
@@ -131,14 +142,6 @@ Other actions
 
     private void OnTimedEvent()
     {
-        //if (isSpellActive() && !Fireball.Active) //synchronization between spells and fireball if something has changed
-        //{
-        //    if (Player.spellAOE.Active)
-        //    {
-        //        Fireball.OnArea = true;
-        //    }
-        //    Fireball.Active = true;
-        //}
         if (fireballToPlayer()) //moving fireball's starting location, when player's location changes
         {
             Fireball.Location = Player.Location;
@@ -197,13 +200,34 @@ Other actions
         }
         GameControl.TargetLocation = location;
         Player.DoAction(location);
+        if (Player.CurrentAction==0)
+        {
+            if (Player==Player1)
+            {
+                Player2.GameMap.GameObjects = Player1.GameMap.GameObjects;
+            }
+            else
+            {
+                Player1.GameMap.GameObjects = Player2.GameMap.GameObjects;
+            }
+            MoveFinished();
+        }
+        switch (Player.CurrentAction)
+        {
+            case 0:
+                break;
+            case 1:
+                SpellButtonTargeted.Active = false;
+                break;
+            case 2:
+                SpellButtonAOE.Active = false;
+                break;
+            default:
+                Debug.WriteLine("[ERROR] INVALID TYPE OF ACTION");
+                throw new NotImplementedException();
+        }
     }
 
-
-    private bool isSpellActive()
-    {
-        return Player.spellAOE.Active || Player.spellTargeted.Active;
-    }
     private bool fireballToPlayer()
     {
         return Player.Location != Fireball.Location && !Fireball.Active && Player.CurrentAction == 0 && !Fireball.FireGrowing;
@@ -223,14 +247,22 @@ Other actions
         {
             mapCell.InvokeCommand = !mapCell.InvokeCommand;
         }
-        Player.spellAOE.InvokeCommand = !Player.spellAOE.InvokeCommand;
-        Player.spellTargeted.InvokeCommand = !Player.spellTargeted.InvokeCommand;
+        SpellButtonAOE.InvokeCommand = !SpellButtonAOE.InvokeCommand;
+        SpellButtonTargeted.InvokeCommand = !SpellButtonTargeted.InvokeCommand;
     }
 
     public ObservableCollection<GameObject> GameObjects { get; set; }
 
     public void MoveFinished()
     {
-        Player = Player == Player1 ? Player2 : Player1;
+        if (index+1<Players.Length)
+        {
+            index++;
+        }
+        else
+        {
+            index = 0;
+        }
+        Player = Players[index];
     }
 }

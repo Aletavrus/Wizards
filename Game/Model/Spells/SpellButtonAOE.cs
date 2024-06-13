@@ -8,8 +8,7 @@ namespace Game.Model.Spells;
 public class SpellButtonAOE : SpellBase
 {
     public bool Active { get; set; }
-    
-    public SpellButtonAOE(Point location, GameMap GameMap, MainViewModel mainViewModel) : base(location, GameMap)
+    public SpellButtonAOE(Point location, GameMap GameMap) : base(location, GameMap)
     {
         ClickCommand = ReactiveCommand.Create(Clicked);
         this.GameMap = GameMap;

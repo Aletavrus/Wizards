@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 using System.Windows.Input;
 using Avalonia;
 using Game.Model.Player;
@@ -8,18 +9,11 @@ using ReactiveUI;
 
 namespace Game.Model.Spells;
 
-public class SpellAOE
+public class SpellAOE(GameMap GameMap)
 {
-    public GameMap GameMap { get; set; }
-    public bool Active { get; set; }
+    public GameMap GameMap { get; set; } = GameMap;
     public int AoeRange = 3;
-    public bool InvokeCommand { get; set; }
-    
-    public SpellAOE(GameMap GameMap)
-    {
-        this.GameMap = GameMap;
-        Active = false;
-    }
+
     public int Execute(Point location)
     {
         int damage = 0;
@@ -35,7 +29,6 @@ public class SpellAOE
             damage = Random.Shared.Next(1, 11);
         }
         Debug.WriteLine("Stopped casting spell");
-        Active = false;
         return damage;
     }
 }

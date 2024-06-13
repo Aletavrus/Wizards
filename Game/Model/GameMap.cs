@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Game.Model;
@@ -64,5 +65,18 @@ public class GameMap
             }
         }
         return false;
+
+        //List<int> playersFound = new List<int>();
+        //for (int i = minX; i < maxX; i++)
+        //{
+        //    for (int j = minY; j < maxY; j++)
+        //    {
+        //        if (GameObjects[i, j] != 0)
+        //        {
+        //            playersFound.Add(GameObjects[i, j]);
+        //        }
+        //    }
+        //}
+        //return playersFound;
     }
 }
