@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Avalonia.Controls.Primitives;
+using Game.Model.Effects;
 
 namespace Game.ViewModels;
 
@@ -69,6 +70,9 @@ public class MainViewModel : ViewModelBase
             new SpellTargeted(GameMap),
             new SpellAOE(GameMap),
             GameMap);
+        
+        // Adding test poison effect !!
+        Player1.AddEffects(new EffectPoison(10, 3));
         
         // Creating second player
         Player2 = new PlayerBase( 
@@ -263,6 +267,8 @@ Other actions
         {
             index = 0;
         }
+        // Effects' effects are applied AFTER person's move
+        Player.EffectsActions();
         Player = Players[index];
     }
 }

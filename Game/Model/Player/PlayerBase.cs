@@ -1,12 +1,14 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using Avalonia;
 
 using ReactiveUI;
 
 using Game.Model.Spells;
 using System.Diagnostics;
+using System.Linq;
 using Avalonia.Remote.Protocol.Input;
+using Game.Model.Effects;
 using Game.ViewModels;
 
 namespace Game.Model.Player;
@@ -27,7 +29,12 @@ public class PlayerBase : GameObject
 	protected int movesLeft = 4;
 	protected int moveCost = 1;
 
+	// Current action
     protected int currentAction = 0; // 0 - move; 1 - SpellTargeted; 2 - SpellAOE
+    
+    // Effects
+    protected List<EffectBase> effects = new List<EffectBase>();
+    
 	public int CurrentAction
 	{
 		get => currentAction;
@@ -90,5 +97,28 @@ public class PlayerBase : GameObject
 		Debug.Write("[Player] HP went from " + health + " to ");
 		health -= x;
 		Debug.WriteLine(health);
+	}
+
+
+	public void AddEffects(EffectBase effect)
+	{
+		effects.Add(effect);
+	}
+	
+	public void EffectsActions()
+	{
+		if (effects.Count != 0)
+		{
+			foreach (var effect in effects.ToList())
+			{
+				effect.ActivateEffects(this);
+			
+				if (!effect.ReduceDuration(1))
+				{
+					effects.Remove(effect);
+				}
+			}
+		}
+		
 	}
 }
