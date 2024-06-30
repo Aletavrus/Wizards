@@ -30,8 +30,10 @@ public class GameMap
         GameObjects[x/100, y/100] = value;
     }
 
-    public bool InsideArea(int x, int y, int range)
+    public List<int> InsideArea(int x, int y, int range)
     {
+        var list = new List<int>();
+
         int minX = x - range;
         if (x - range < 0)
         {
@@ -58,13 +60,13 @@ public class GameMap
         {
             for (int j = minY; j < maxY; j++)
             {
-                if (GameObjects[i, j] == 1)
+                if (GameObjects[i, j] != 0)
                 {
-                    return true;
+                    list.Add(GameObjects[i, j]);
                 }
             }
         }
-        return false;
+        return list;
 
         //List<int> playersFound = new List<int>();
         //for (int i = minX; i < maxX; i++)

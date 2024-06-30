@@ -72,7 +72,7 @@ public class MainViewModel : ViewModelBase
             GameMap);
         
         // Adding test poison effect !!
-        Player1.AddEffects(new EffectPoison(10, 3));
+        //Player1.AddEffects(new EffectPoison(10, 3));
         
         // Creating second player
         Player2 = new PlayerBase( 
@@ -86,10 +86,17 @@ public class MainViewModel : ViewModelBase
         GameObjects.Add(Player2);
 
         // Creating array of players
-        Players = new PlayerBase[]{ Player1, Player2 };
+        Players = new PlayerBase[] { Player1, Player2 };
         for (int i = 0; i<Players.Length; i++)
         {
-            Players[i].GameMap.PutValueToCell(i, Convert.ToInt16(Players[i].Location.X), Convert.ToInt16(Players[i].Location.Y));
+            Players[i].GameMap.PutValueToCell(i+1, Convert.ToInt16(Players[i].Location.X), Convert.ToInt16(Players[i].Location.Y));
+            GameMap.PutValueToCell(i+1, Convert.ToInt16(Players[i].Location.X), Convert.ToInt16(Players[i].Location.Y));
+        }
+        foreach (PlayerBase player in Players)
+        {
+            player.GameMap.GameObjects = GameMap.GameObjects;
+            player.spellAOE.GameMap.GameObjects = GameMap.GameObjects;
+            player.spellTargeted.GameMap.GameObjects = GameMap.GameObjects;
         }
         
         // Setting Player1 as a current player
@@ -204,31 +211,41 @@ Other actions
         }
         GameControl.TargetLocation = location;
         Player.DoAction(location);
-        if (Player.CurrentAction==0)
-        {
-            if (Player==Player1)
-            {
-                Player2.GameMap.GameObjects = Player1.GameMap.GameObjects;
-            }
-            else
-            {
-                Player1.GameMap.GameObjects = Player2.GameMap.GameObjects;
-            }
-            MoveFinished();
-        }
         switch (Player.CurrentAction)
         {
             case 0:
                 break;
             case 1:
+                if (Player.spellTargeted.playerHit!=0)
+                {
+                    Players[Player.spellTargeted.playerHit - 1].Damage(Player.spellTargeted.damage);
+                }
                 SpellButtonTargeted.Active = false;
                 break;
             case 2:
+                if (Player.spellAOE.playerHit != null)
+                {
+                    foreach (int counter in Player.spellAOE.playerHit)
+                    {
+                        Players[counter-1].Damage(Player.spellAOE.damage);
+                    }
+                }
                 SpellButtonAOE.Active = false;
                 break;
             default:
                 Debug.WriteLine("[ERROR] INVALID TYPE OF ACTION");
                 throw new NotImplementedException();
+        }
+        Debug.WriteLine($"Current player is {index}");
+        for (int i = 0; i < Players.Length; i++)
+        {
+            Debug.Write($"Player{i} = {Players[i].health} ");
+        }
+        Debug.WriteLine("/n");
+        if (Player.CurrentAction==0)
+        {
+            SyncGameMaps();
+            MoveFinished();
         }
     }
 
@@ -267,8 +284,19 @@ Other actions
         {
             index = 0;
         }
+        Player.movesLeft = 4;
         // Effects' effects are applied AFTER person's move
         Player.EffectsActions();
         Player = Players[index];
+    }
+
+    public void SyncGameMaps()
+    {
+        foreach (PlayerBase player in Players)
+        {
+            player.GameMap.GameObjects = Player.GameMap.GameObjects;
+            player.spellTargeted.GameMap.GameObjects = Player.GameMap.GameObjects;
+            player.spellAOE.GameMap.GameObjects = Player.GameMap.GameObjects;
+        }
     }
 }

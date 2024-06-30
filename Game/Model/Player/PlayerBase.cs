@@ -26,7 +26,7 @@ public class PlayerBase : GameObject
 	public int health = 100;
 
 	// How many moves left and how many stamina one move costs
-	protected int movesLeft = 4;
+	public int movesLeft = 4;
 	protected int moveCost = 1;
 
 	// Current action
@@ -58,10 +58,10 @@ public class PlayerBase : GameObject
                 Move(location);
 				break;
             case 1:
-                Damage(spellTargeted.Execute(location));
+                spellTargeted.Execute(location);
 				break;
             case 2:
-                Damage(spellAOE.Execute(location));
+                spellAOE.Execute(location);
 				break;
             default:
                 Log("[ERROR] INVALID TYPE OF SPELL");
@@ -82,11 +82,11 @@ public class PlayerBase : GameObject
 		else
 		{
 			movesLeft -= cost; // Removing moves
-			GameMap.PutValueToCell(0, Convert.ToInt32(Location.X), Convert.ToInt32(Location.Y)); // Changing old cell to 0
+            int value = GameMap.GameObjects[Convert.ToInt32(Location.X)/100, Convert.ToInt32(Location.Y)/100]; //saving the index of a player on GameMap
+            GameMap.PutValueToCell(0, Convert.ToInt32(Location.X), Convert.ToInt32(Location.Y)); // Changing old cell to 0
 			Location = newLocation;
 			Log("Location changed");
-			GameMap.PutValueToCell(1, Convert.ToInt32(newLocation.X), Convert.ToInt32(newLocation.Y)); // Changing new cell to 1
-			movesLeft = 4; //THIS IS GOING TO BE INSIDE A MVM, BUT NOW IT'S HERE. AT THE END IT WILL RESET AFTER THE END OF A TURN
+			GameMap.PutValueToCell(value, Convert.ToInt32(newLocation.X), Convert.ToInt32(newLocation.Y)); // Changing new cell to 1
 			spellAOE.GameMap.GameObjects = GameMap.GameObjects;
 			spellTargeted.GameMap.GameObjects = GameMap.GameObjects;
 		}
