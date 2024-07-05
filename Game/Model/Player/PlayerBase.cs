@@ -29,7 +29,7 @@ public class PlayerBase : GameObject
 	public int movesLeft = 4;
 	protected int moveCost = 1;
 
-	// Current action
+    // Current action
     protected int currentAction = 0; // 0 - move; 1 - SpellTargeted; 2 - SpellAOE
     
     // Effects
@@ -103,22 +103,28 @@ public class PlayerBase : GameObject
 	public void AddEffects(EffectBase effect)
 	{
 		effects.Add(effect);
+
+		if (effect is EffectSlow)
+		{
+			effect.ActivateEffects(this);
+		}
 	}
 	
 	public void EffectsActions()
 	{
 		if (effects.Count != 0)
 		{
+			Debug.WriteLine("Entered conditon");
 			foreach (var effect in effects.ToList())
 			{
 				effect.ActivateEffects(this);
 			
 				if (!effect.ReduceDuration(1))
 				{
+
 					effects.Remove(effect);
 				}
 			}
 		}
-		
 	}
 }

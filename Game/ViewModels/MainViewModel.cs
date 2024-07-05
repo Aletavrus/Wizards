@@ -70,9 +70,10 @@ public class MainViewModel : ViewModelBase
             new SpellTargeted(GameMap),
             new SpellAOE(GameMap),
             GameMap);
-        
-        // Adding test poison effect !!
+
+        // Adding test effect !!
         //Player1.AddEffects(new EffectPoison(10, 3));
+        Player1.AddEffects(new EffectSlow(2, 2));
         
         // Creating second player
         Player2 = new PlayerBase( 
@@ -239,6 +240,7 @@ Other actions
         Debug.WriteLine($"Current player is {index}");
         for (int i = 0; i < Players.Length; i++)
         {
+            Debug.Write($"Player{i} = {Players[i].movesLeft} ");
             Debug.Write($"Player{i} = {Players[i].health} ");
         }
         Debug.WriteLine("/n");
@@ -285,7 +287,6 @@ Other actions
             index = 0;
         }
         Player.movesLeft = 4;
-        // Effects' effects are applied AFTER person's move
         Player.EffectsActions();
         Player = Players[index];
     }
