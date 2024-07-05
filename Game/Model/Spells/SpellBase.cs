@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
+using System.Windows.Input;
 using Avalonia;
 using ReactiveUI;
 
@@ -10,15 +11,29 @@ namespace Game.Model.Spells;
 [JsonDerivedType(typeof(SpellTargeted), "SpellTargeted")]
 public class SpellBase : GameObject
 {
-    private Point _location;
-    public GameMap GameMap { get; set; }
+    protected Point _location;
     public bool InvokeCommand { get; set; }
+    public bool Active { get; set; }
 
-    public SpellBase(Point location, GameMap GameMap) : base(location)
+    public SpellBase(Point location) : base(location)
     {
+        ClickCommand = ReactiveCommand.Create(Clicked);
         Location = location;
-        this.GameMap = GameMap;
         InvokeCommand = true;
+        Active = false;
+    }
+
+    public ICommand ClickCommand { get; }
+
+    protected void Clicked()
+    {
+        if (InvokeCommand)
+        {
+            Active = !Active;
+            Log("Spell icon clicked. Waiting for a cell click");
+            return;
+        }
+        Log("Doing other action");
     }
     public Point Location
     {
@@ -27,10 +42,5 @@ public class SpellBase : GameObject
         {
             this.RaiseAndSetIfChanged(ref _location, value);
         }
-    }
-
-    public void Execute(Point location)
-    {
-        
     }
 }

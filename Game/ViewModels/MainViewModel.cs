@@ -13,13 +13,11 @@ using Game.Model.Spells;
 using Game.Views;
 using Avalonia.Controls;
 using ReactiveUI;
-using System.IO;
 using Avalonia.Threading;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Avalonia.Controls.Primitives;
 using Game.Model.Effects;
 
@@ -39,6 +37,7 @@ public class MainViewModel : ViewModelBase
 
     public SpellButtonAOE SpellButtonAOE { get; set; }
     public SpellButtonTargeted SpellButtonTargeted { get; set; }
+    public SpellButtonGround SpellButtonGround { get; set; }
     public Fireball Fireball { get; set; }
     public GameControl GameControl { get; set; }
     public DispatcherTimer Timer {  get; set; }
@@ -69,17 +68,19 @@ public class MainViewModel : ViewModelBase
             new Point(3 * CellSize, 5 * CellSize),
             new SpellTargeted(GameMap),
             new SpellAOE(GameMap),
+            new SpellGround(GameMap, new EffectSlow(2, 2)),
             GameMap);
 
         // Adding test effect !!
         //Player1.AddEffects(new EffectPoison(10, 3));
-        Player1.AddEffects(new EffectSlow(2, 2));
+        //Player1.AddEffects(new EffectSlow(2, 2));
         
         // Creating second player
         Player2 = new PlayerBase( 
             new Point(3 * CellSize, 2 * CellSize),
             new SpellTargeted(GameMap),
             new SpellAOE(GameMap),
+            new SpellGround(GameMap, new EffectPoison(2, 2)),
             GameMap);
 
         // Adding two players to game objects
@@ -104,11 +105,13 @@ public class MainViewModel : ViewModelBase
         Player = Players[index];
 
         // Creating buttons for spells
-        SpellButtonTargeted = new SpellButtonTargeted(new Point(10, 3*CellSize + 10), GameMap);
-        SpellButtonAOE = new SpellButtonAOE(new Point((Width - 1) * CellSize + 10, 3 * CellSize + 10), GameMap);
+        SpellButtonTargeted = new SpellButtonTargeted(new Point(10, 3*CellSize + 10));
+        SpellButtonAOE = new SpellButtonAOE(new Point((Width - 1) * CellSize + 10, 3 * CellSize + 10));
+        SpellButtonGround = new SpellButtonGround(new Point(10, 6*CellSize + 10)); 
         
         GameObjects.Add(SpellButtonTargeted);
         GameObjects.Add(SpellButtonAOE);
+        GameObjects.Add(SpellButtonGround);
         
         for (int i = 1; i < 8; i++)
         {
@@ -205,7 +208,15 @@ Other actions
             Player.CurrentAction = 2;
             Fireball.OnArea = true;
         }
-        if (Player.CurrentAction !=0)
+        else if (SpellButtonGround.Active)
+        {
+            Player.CurrentAction = 3;
+        }
+        else
+        {
+            Player.CurrentAction = 0;
+        }
+        if (Player.CurrentAction !=0 && Player.CurrentAction!=3)
         {
             ChangeInvokeCommand(); //to stop any interactions while some spell is being casted
             Fireball.ChangeState();
@@ -233,17 +244,17 @@ Other actions
                 }
                 SpellButtonAOE.Active = false;
                 break;
+            case 3:
+                if (Player.spellGround.playerHit !=  0)
+                {
+                    Players[Player.spellGround.playerHit - 1].AddEffects(Player.spellGround.effect);
+                }
+                SpellButtonGround.Active = false;
+                break;
             default:
                 Debug.WriteLine("[ERROR] INVALID TYPE OF ACTION");
                 throw new NotImplementedException();
         }
-        Debug.WriteLine($"Current player is {index}");
-        for (int i = 0; i < Players.Length; i++)
-        {
-            Debug.Write($"Player{i} = {Players[i].movesLeft} ");
-            Debug.Write($"Player{i} = {Players[i].health} ");
-        }
-        Debug.WriteLine("/n");
         if (Player.CurrentAction==0)
         {
             SyncGameMaps();

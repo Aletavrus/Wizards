@@ -18,6 +18,7 @@ public class PlayerBase : GameObject
 	// Spells
 	public SpellTargeted spellTargeted;
 	public SpellAOE spellAOE;
+	public SpellGround spellGround;
 
 	// Map
 	public GameMap GameMap {get; set;}
@@ -43,10 +44,11 @@ public class PlayerBase : GameObject
 
 	// Stamina
 	protected int stamina = 10;	
-    public PlayerBase(Point location, SpellTargeted spellTargeted, SpellAOE spellAOE, GameMap gameMap) : base(location)
+    public PlayerBase(Point location, SpellTargeted spellTargeted, SpellAOE spellAOE, SpellGround spellGround, GameMap gameMap) : base(location)
     {
 	    this.spellTargeted = spellTargeted;
 	    this.spellAOE = spellAOE;
+		this.spellGround = spellGround;	
 		GameMap = gameMap;
     }
 
@@ -62,6 +64,9 @@ public class PlayerBase : GameObject
 				break;
             case 2:
                 spellAOE.Execute(location);
+				break;
+			case 3:
+				spellGround.Execute(location);
 				break;
             default:
                 Log("[ERROR] INVALID TYPE OF SPELL");

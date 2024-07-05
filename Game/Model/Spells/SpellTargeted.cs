@@ -16,7 +16,7 @@ public class SpellTargeted(GameMap GameMap)
     public int playerHit = 0;
     public int damage = 0;
 
-    public void Execute(Point location)
+    public virtual void Execute(Point location)
     {
         damage = 0;
         Debug.WriteLine("Clicked on cell. Executing spell");
