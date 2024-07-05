@@ -68,7 +68,7 @@ public class MainViewModel : ViewModelBase
             new Point(3 * CellSize, 5 * CellSize),
             new SpellTargeted(GameMap),
             new SpellAOE(GameMap),
-            new SpellGround(GameMap, new EffectSlow(2, 2)),
+            new SpellGround(GameMap, new EffectDamage(2, 2)),
             GameMap);
 
         // Adding test effect !!
@@ -254,6 +254,11 @@ Other actions
             default:
                 Debug.WriteLine("[ERROR] INVALID TYPE OF ACTION");
                 throw new NotImplementedException();
+        }
+        for (int i = 0; i < Players.Length; i++)
+        {
+            Debug.WriteLine($"Player{i} = {Players[i].damageIncrease} ");
+            Debug.WriteLine("/n");
         }
         if (Player.CurrentAction==0)
         {

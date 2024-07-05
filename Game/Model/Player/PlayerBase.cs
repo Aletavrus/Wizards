@@ -26,6 +26,9 @@ public class PlayerBase : GameObject
 	// Health and position
 	public int health = 100;
 
+	//Damage increase coefficient
+	public int damageIncrease = 1;
+
 	// How many moves left and how many stamina one move costs
 	public int movesLeft = 4;
 	protected int moveCost = 1;
@@ -100,7 +103,7 @@ public class PlayerBase : GameObject
 	public virtual void Damage(int x)
 	{
 		Debug.Write("[Player] HP went from " + health + " to ");
-		health -= x;
+		health -= x*damageIncrease;
 		Debug.WriteLine(health);
 	}
 
@@ -109,7 +112,7 @@ public class PlayerBase : GameObject
 	{
 		effects.Add(effect);
 
-		if (effect is EffectSlow)
+		if (effect is EffectSlow || effect is EffectDamage)
 		{
 			effect.ActivateEffects(this);
 		}
@@ -126,7 +129,10 @@ public class PlayerBase : GameObject
 			
 				if (!effect.ReduceDuration(1))
 				{
-
+					if (effect is EffectDamage)
+					{
+						damageIncrease = 1;
+					}
 					effects.Remove(effect);
 				}
 			}
