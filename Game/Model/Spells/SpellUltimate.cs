@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text.Json.Serialization;
-using System.Windows.Input;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Avalonia;
-using Game.Model.Player;
-using Game.ViewModels;
-using ReactiveUI;
+using Game.Model.Effects;
 
 namespace Game.Model.Spells;
-
-public class SpellAOE
+public class SpellUltimate
 {
-    public SpellAOE(GameMap gameMap, int minDamage, int maxDamage)
+    public SpellUltimate(GameMap gameMap, EffectBase effect, int minDamage, int maxDamage)
     {
         GameMap = gameMap;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
+        this.effect = effect;
     }
     public GameMap GameMap { get; set; }
     public int minDamage;
     public int maxDamage;
-    public int AoeRange = 2;
+    public EffectBase effect;
+    public int AoeRange = 5;
     public List<int> playerHit;
     public int damage = 0;
 
@@ -30,9 +30,9 @@ public class SpellAOE
         damage = 0;
         Debug.WriteLine("Clicked on cell. Executing spell");
         playerHit = GameMap.InsideArea(Convert.ToInt16(location.X) / 100, Convert.ToInt16(location.Y) / 100, AoeRange);
-        if (playerHit==null)
+        if (playerHit == null)
         {
-            Debug.WriteLine("Player too far away");
+            Debug.WriteLine("Players are too far away");
         }
         else
         {

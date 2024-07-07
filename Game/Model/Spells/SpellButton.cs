@@ -7,15 +7,13 @@ using ReactiveUI;
 
 namespace Game.Model.Spells;
 
-[JsonDerivedType(typeof(SpellAOE), "SpellAOE")]
-[JsonDerivedType(typeof(SpellTargeted), "SpellTargeted")]
-public class SpellBase : GameObject
+public class SpellButton : GameObject
 {
     protected Point _location;
     public bool InvokeCommand { get; set; }
     public bool Active { get; set; }
 
-    public SpellBase(Point location) : base(location)
+    public SpellButton(Point location) : base(location)
     {
         ClickCommand = ReactiveCommand.Create(Clicked);
         Location = location;

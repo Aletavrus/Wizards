@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace Game.Model.Effects;
 public class EffectDamage: EffectBase
 {
-    private int _increaseDamage;
-    public EffectDamage(int duration, int increaseDamage): base(duration)
+    private double _increaseDamage;
+    public EffectDamage(int duration, double increaseDamage): base(duration)
     {
         _increaseDamage = increaseDamage;
     }

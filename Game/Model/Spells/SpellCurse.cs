@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Game.Model.Spells;
-public class SpellGround
+public class SpellCurse
 {
     public GameMap GameMap { get; set; }
     public int playerHit = 0;
     public EffectBase effect;
-    public SpellGround(GameMap gameMap, EffectBase effect)
+    public SpellCurse(GameMap gameMap, EffectBase effect)
     {
         GameMap = gameMap;
         this.effect = effect;

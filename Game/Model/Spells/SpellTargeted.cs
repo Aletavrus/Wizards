@@ -10,9 +10,11 @@ using ReactiveUI;
 
 namespace Game.Model.Spells;
 
-public class SpellTargeted(GameMap GameMap)
+public class SpellTargeted(GameMap GameMap, int minDamage, int maxDamage)
 {
     public GameMap GameMap { get; set; } = GameMap;
+    public int minDamage = minDamage;
+    public int maxDamage = maxDamage;
     public int playerHit = 0;
     public int damage = 0;
 
@@ -29,7 +31,7 @@ public class SpellTargeted(GameMap GameMap)
         {
             Debug.WriteLine("Player found. Damaging player");
             playerHit = GameMap.GameObjects[Convert.ToInt16(location.X) / 100, Convert.ToInt16(location.Y) / 100];
-            damage = Random.Shared.Next(1, 11);
+            damage = Random.Shared.Next(minDamage, maxDamage+1);
         }
         Debug.WriteLine("Stopped casting spell");
     }

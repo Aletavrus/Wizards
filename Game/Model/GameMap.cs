@@ -67,18 +67,5 @@ public class GameMap
             }
         }
         return list;
-
-        //List<int> playersFound = new List<int>();
-        //for (int i = minX; i < maxX; i++)
-        //{
-        //    for (int j = minY; j < maxY; j++)
-        //    {
-        //        if (GameObjects[i, j] != 0)
-        //        {
-        //            playersFound.Add(GameObjects[i, j]);
-        //        }
-        //    }
-        //}
-        //return playersFound;
     }
 }

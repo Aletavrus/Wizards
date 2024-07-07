@@ -18,7 +18,8 @@ public class PlayerBase : GameObject
 	// Spells
 	public SpellTargeted spellTargeted;
 	public SpellAOE spellAOE;
-	public SpellGround spellGround;
+	public SpellCurse spellCurse;
+	public SpellUltimate spellUltimate;
 
 	// Map
 	public GameMap GameMap {get; set;}
@@ -27,7 +28,7 @@ public class PlayerBase : GameObject
 	public int health = 100;
 
 	//Damage increase coefficient
-	public int damageIncrease = 1;
+	public double damageIncrease = 1;
 
 	// How many moves left and how many stamina one move costs
 	public int movesLeft = 4;
@@ -47,11 +48,12 @@ public class PlayerBase : GameObject
 
 	// Stamina
 	protected int stamina = 10;	
-    public PlayerBase(Point location, SpellTargeted spellTargeted, SpellAOE spellAOE, SpellGround spellGround, GameMap gameMap) : base(location)
+    public PlayerBase(Point location, SpellTargeted spellTargeted, SpellAOE spellAOE, SpellCurse spellEffect, SpellUltimate spellUltimate, GameMap gameMap) : base(location)
     {
 	    this.spellTargeted = spellTargeted;
 	    this.spellAOE = spellAOE;
-		this.spellGround = spellGround;	
+		this.spellCurse = spellEffect;	
+		this.spellUltimate = spellUltimate;
 		GameMap = gameMap;
     }
 
@@ -69,7 +71,10 @@ public class PlayerBase : GameObject
                 spellAOE.Execute(location);
 				break;
 			case 3:
-				spellGround.Execute(location);
+				spellCurse.Execute(location);
+				break;
+			case 4:
+				spellUltimate.Execute(location);
 				break;
             default:
                 Log("[ERROR] INVALID TYPE OF SPELL");
@@ -103,7 +108,7 @@ public class PlayerBase : GameObject
 	public virtual void Damage(int x)
 	{
 		Debug.Write("[Player] HP went from " + health + " to ");
-		health -= x*damageIncrease;
+		health -= Convert.ToInt16(x*damageIncrease);
 		Debug.WriteLine(health);
 	}
 
